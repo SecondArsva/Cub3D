@@ -6,7 +6,7 @@
 #    By: davidga2 <davidga2@student.42madrid.com>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/10 20:00:17 by davidga2          #+#    #+#              #
-#    Updated: 2023/09/13 00:01:26 by davidga2         ###   ########.fr        #
+#    Updated: 2023/07/27 13:31:22 by davidga2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,13 @@ SRC = ft_isalpha.c				\
 	  ft_lstcreate.c			\
 	  ft_atol.c					\
 	  ft_lstprint_long.c		\
-	  ft_strdoublejoin.c
+	  safe_malloc.c				\
+	  safe_calloc.c				\
+	  safe_strjoin.c			\
+	  safe_strdup.c				\
+	  safe_substr.c				\
+	  safe_itoa.c				\
+	  safe_strtrim.c
 
 # Headers like you see.
 HEADERS = libft.h

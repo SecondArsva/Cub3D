@@ -121,4 +121,13 @@ void	ft_putnbrlong_count(long n, int *ctr);
 // Pipex addons
 char	*ft_strdoublejoin(char *str1, char *str2, char *str3);
 
+// Minishell addons
+void	*safe_malloc(size_t bytes);
+void	*safe_calloc(size_t count, size_t size);
+char	*safe_strjoin(char const *s1, char const *s2);
+char	*safe_strdup(const char *s1);
+char	*safe_substr(char const *s, unsigned int start, size_t len);
+char	*safe_itoa(int n);
+char	*safe_strtrim(char const *s1, char const *set);
+
 #endif
