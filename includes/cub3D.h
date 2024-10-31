@@ -15,12 +15,17 @@
 
 # include "../../libs/libft/libft.h"
 
-typedef struct	s_cub3d
+typedef struct	s_data
 {
+	int		cub_fd;
 	char	*n_img_path;
 	char	*s_img_path;
 	char	*e_img_path;
 	char	*w_img_path;
+	int		n_fd;
+	int		s_fd;
+	int		e_fd;
+	int		w_fd;
 	int		f_red;
 	int		f_gre;
 	int		f_blu;
@@ -28,6 +33,18 @@ typedef struct	s_cub3d
 	int		c_gre;
 	int		c_blu;
 	char	**map;
-}				t_cub3d;
+	float	player_pos_x;
+	float	player_pos_y;
+	t_angle	player_angle;
+}				t_data;
+
+typedef enum	e_angle
+{
+	UNKNOWN,
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST,
+}				t_angle;
 
 #endif
