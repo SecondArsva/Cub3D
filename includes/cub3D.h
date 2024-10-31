@@ -15,8 +15,20 @@
 
 # include "../libs/libft/libft.h"
 
+typedef enum	e_angle
+{
+	UNKNOWN,
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST,
+}				t_angle;
+
 typedef struct	s_data
 {
+	int		i;
+	int		j;
+	char	*arg_path;
 	int		cub_fd;
 	char	*n_img_path;
 	char	*s_img_path;
@@ -38,13 +50,6 @@ typedef struct	s_data
 	t_angle	player_angle;
 }				t_data;
 
-typedef enum	e_angle
-{
-	UNKNOWN,
-	NORTH,
-	SOUTH,
-	EAST,
-	WEST,
-}				t_angle;
+
 
 #endif
