@@ -6,7 +6,7 @@
 /*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 18:16:39 by bmatos-d          #+#    #+#             */
-/*   Updated: 2024/10/30 21:12:38 by bmatos-d         ###   ########.fr       */
+/*   Updated: 2024/10/31 00:47:49 by bmatos-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,17 @@
 # include <X11/keysym.h>
 # include "./MLX-LNX/mlx.h"
 #define NUM_TXT 	4
-#define WIN_WID 	600
-#define WIN_HEI 	500
+#define WIN_WID 	300
+#define WIN_HEI 	200
 #define TITLE__ 	"Cub3d Preliminary"
 #define SPEED 		0.6
 #define PLN_WID 	0.66
 #define FORWARD 	1
 #define BACKWARD 	-1
+#define NORTH		0
+#define EAST		1
+#define SOUTH		2
+#define WEST		3
 
 
 
@@ -48,8 +52,8 @@ typedef struct s_img
 typedef struct s_parsed_data
 {
 																		// POS
-	// Cuando parseas estes valores creo que 
-	// es mejor que anades un 0.5 para estar 
+	// Cuando parseas estes valores creo que
+	// es mejor que anades un 0.5 para estar
 	// en el medio del cuadrado no el rincon.
 	double	pos_x;
 	double	pos_y;
@@ -63,9 +67,9 @@ typedef struct s_parsed_data
 	double	angle;
 
 																		// DIR / PLN
-	// executa 
+	// executa
 	// angletval(t_parsed_data *global);
-	// despues y te da los proximos cuatro 
+	// despues y te da los proximos cuatro
 	// valores
 	double	dir_x;
 	double	dir_y;
@@ -78,12 +82,12 @@ typedef struct s_parsed_data
 	int		btm_colour;
 	int		tmp_colour1;
 	int		tmp_colour2;
+	int		tmp_colour3;
+	int		tmp_colour4;
 	int		*texture_buffer[NUM_TXT];
 
 																		//Map
 	char	**map;
-																		
-																		
 																		//RAY DATA
 	//Informacion Temporania Por Cada Rayo
 	double	horizontal_pixel;
@@ -99,7 +103,7 @@ typedef struct s_parsed_data
 	double	x_dist_traversed;
 	double	y_dist_traversed;
 	int		wall_type;
-	float	wall_dist;
+	float   wall_dist;
 	int		wall_height;
 	int		draw_start;
 	int		draw_end;
@@ -111,7 +115,7 @@ typedef struct s_parsed_data
 	void	*mlx_con;
 	void	*mlx_win;
 	t_img	mlx_img;
-	
+
 }	t_parsed_data;
 
 //  ┌──────────────────────────────────────────────────────────────────────────┐
@@ -137,9 +141,9 @@ void draw_ceiling_floor(t_parsed_data *global)
 		while (++y < WIN_HEI)
 		{
 			if (y < WIN_HEI/ 2)
-				my_pixel_put(x, y, &global->mlx_img, global->btm_colour);
-			else
 				my_pixel_put(x, y, &global->mlx_img, global->top_colour);
+			else
+				my_pixel_put(x, y, &global->mlx_img, global->btm_colour);
 		}
 	}
 	mlx_put_image_to_window(global->mlx_con, global->mlx_win, global->mlx_img.img_ptr, 0, 0);
@@ -165,24 +169,24 @@ void initial_side_differences(t_parsed_data *global)
 	if (global->current_ray_x_component < 0)
 	{
 		global->p_n_x_step = -1;
-		global->x_dist_traversed = (global->pos_x - global->current_cell_x) * global->x_intercept_unit_distance; 
+		global->x_dist_traversed = (global->pos_x - global->current_cell_x) * global->x_intercept_unit_distance;
 	}
 	else
-		global->x_dist_traversed = (1 + global->current_cell_x - global->pos_x) * global->x_intercept_unit_distance; 
+		global->x_dist_traversed = (1 + global->current_cell_x - global->pos_x) * global->x_intercept_unit_distance;
 	if (global->current_ray_y_component < 0)
 	{
 		global->p_n_y_step = -1;
-		global->y_dist_traversed = (global->pos_y - global->current_cell_y) * global->y_intercept_unit_distance; 
+		global->y_dist_traversed = (global->pos_y - global->current_cell_y) * global->y_intercept_unit_distance;
 	}
 	else
-		global->y_dist_traversed = (1 + global->current_cell_y - global->pos_y) * global->y_intercept_unit_distance; 
+		global->y_dist_traversed = (1 + global->current_cell_y - global->pos_y) * global->y_intercept_unit_distance;
 }
 void dda(t_parsed_data *global)
 {
-	while (42)	
-	{		
+	while (42)
+	{
 		if (global->x_dist_traversed < global->y_dist_traversed)
-		{			
+		{
 				global->x_dist_traversed += global->x_intercept_unit_distance;
 				global->current_cell_x += global->p_n_x_step;
 				global->wall_type = 0;
@@ -206,18 +210,18 @@ void wall_height(t_parsed_data *global)
 		global->wall_dist = (global->current_cell_y - global->pos_y + (1 - global->p_n_y_step) / 2) / global->current_ray_y_component;
 	global->wall_height = (int)(WIN_HEI / global->wall_dist);
 	global->draw_start = -global->wall_height / 2 + WIN_HEI / 2;
-	
-	if (global->draw_start < 0)		
+
+	if (global->draw_start < 0)
 		global->draw_start = 0;
-	
+
 	global->draw_end = global->wall_height/ 2 + WIN_HEI / 2;
-	
+
 	if (global->draw_end >= WIN_HEI)
 		global->draw_end = WIN_HEI - 1;
 
 	if (global->wall_type == 0)
 		global->wall_impact = global->pos_y + global->wall_dist * global->current_ray_y_component;
-	else		
+	else
 		global->wall_impact = global->pos_x + global->wall_dist * global->current_ray_x_component;
 	global->wall_impact -= floor(global->wall_impact);
 }
@@ -227,10 +231,20 @@ void drawing(t_parsed_data *global)
 	global->current_y_pixel = global->draw_start;
 	while (global->current_y_pixel <= global->draw_end)
 	{
-		if (global->wall_type == 0)
+		//WEST
+		if (global->wall_type == 0 && (global->current_ray_x_component) > 0)
 			my_pixel_put(WIN_WID - global->horizontal_pixel, global->current_y_pixel++, &global->mlx_img, global->tmp_colour1);
-		else
+		//EAST
+		else if (global->wall_type == 0 && global->current_ray_x_component <= 0)
 			my_pixel_put(WIN_WID - global->horizontal_pixel, global->current_y_pixel++, &global->mlx_img, global->tmp_colour2);
+		//SOUTH
+		else if (global->wall_type == 1 && global->current_ray_y_component > 0)
+			my_pixel_put(WIN_WID - global->horizontal_pixel, global->current_y_pixel++, &global->mlx_img, global->tmp_colour3);
+		//NORTH
+		else if (global->wall_type == 1 && global->current_ray_y_component <= 0)
+			my_pixel_put(WIN_WID - global->horizontal_pixel, global->current_y_pixel++, &global->mlx_img, global->tmp_colour4);
+		//x = (int)(texture_width * impact)
+		//y = (int)(texture_height * ((global-> y  - draw_start) / (draw->end - draw->start)))
 	}
 }
 void find_walls(t_parsed_data *global)
@@ -334,8 +348,8 @@ t_parsed_data *parsing_temp()
 	ret->btm_colour = 12551447;
 	ret->tmp_colour1 = 00000000;
 	ret->tmp_colour2 = 55555555;
-	ret->tmp_colour3 = 10000000;
-	ret->tmp_colour4 = 15000000;
+	ret->tmp_colour4 = 15599955;
+	ret->tmp_colour3 = 77711177;
 	return(ret);
 }
 int main()
@@ -343,14 +357,14 @@ int main()
 	t_parsed_data   *global;
 	char			**temp_map;
 
-	global = parsing_temp(); 
+	global = parsing_temp();
 	if (!global)
 		exit(EXIT_FAILURE);
 	//DELETE//////////////////////////////////////////////////////////////////
 	temp_map = malloc(sizeof(char *) * 20);
 	temp_map[0]  = strdup("1111111111111111111111111");
 	temp_map[1]  = strdup("1000000000000000000000001");
-	temp_map[2]  = strdup("1000000000000000000000011");
+	temp_map[2]  = strdup("1000010000000000000000011");
 	temp_map[3]  = strdup("1000000000000000000000001");
 	temp_map[4]  = strdup("1000000000000000000000001");
 	temp_map[5]  = strdup("1000000000000000000000001");
@@ -360,11 +374,11 @@ int main()
 	temp_map[9]  = strdup("1000000111111111100000001");
 	temp_map[10] = strdup("1000000000000000000000001");
 	temp_map[11] = strdup("1000000000000000000000001");
-	temp_map[12] = strdup("1000000000000000000000001");
+	temp_map[12] = strdup("1000000110000000000000001");
 	temp_map[13] = strdup("1000000000000000000000001");
 	temp_map[14] = strdup("1000000000000000000000001");
-	temp_map[15] = strdup("1000000000000000000000001");
-	temp_map[16] = strdup("1000000000000000000000001");
+	temp_map[15] = strdup("1000000000000001000000001");
+	temp_map[16] = strdup("1000000001000000000000001");
 	temp_map[17] = strdup("1000000000000000000000001");
 	temp_map[18] = strdup("1000000000000000000000001");
 	temp_map[19] = strdup("1111111111111111111111111");
@@ -374,11 +388,10 @@ int main()
 	global->map = temp_map;
 	//////////////////////////////////////////////////////////////////////
 
-	
+
 	window_init(global);
 	render(global);
 	render(global);
 	mlx_loop(global->mlx_con);
 	exit (EXIT_SUCCESS);
 }
-
