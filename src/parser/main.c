@@ -12,14 +12,16 @@
 
 #include "../../includes/cub3D.h"
 
+// 
 void incorrect_args(int argc)
 {
 	if (argc < 2)
-		ft_printf_error("You must introduce a map as an argument\n");
+		ft_printf_error("You must introduce a map as an argument.\n");
 	else if (argc > 2)
-		ft_printf_error("You cant introduce more arguments than a map\n");
+		ft_printf_error("You cant introduce more arguments than a map.\n");
 }
 
+// inicialización de data para un uso correcto de la estructura.
 void init_data(t_data **data)
 {
 	(*data)->cub_fd = 0;
@@ -43,9 +45,21 @@ void init_data(t_data **data)
 	(*data)->player_angle = UNKNOWN;
 }
 
+// - Comprobar que sea ".cub"
+//		Medir leng del string y retroceder 4 si es >4,
+//		sino, error.
+//		Comprobar que termina en ".cub"
+// - Comprobar la validez del archivo recibido
+// 		Hacer open y ver que existe un fd válido,
+//		esto permite ver la existencia del archívo.
+//		Si el open falla, error.
+void check_arg()
+
+
 void parser(char *arg, t_data **data)
 {
 	init_data(data);
+	check_arg(arg, data);
 }
 
 int main(int argc, char **argv)
