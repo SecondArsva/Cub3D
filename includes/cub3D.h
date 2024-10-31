@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davidga2 <davidga2@student.42madrid.com>   #+#  +:+       +#+        */
+/*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-10-30 22:08:17 by davidga2          #+#    #+#             */
-/*   Updated: 2024-10-30 22:08:17 by davidga2         ###   ########.fr       */
+/*   Created: 2024/10/30 22:08:17 by davidga2          #+#    #+#             */
+/*   Updated: 2024/10/31 18:42:06 by bmatos-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define CUB3D_H
 
 # include "../../libs/libft/libft.h"
+
+
+
 
 typedef struct	s_cub3d
 {
@@ -28,6 +31,9 @@ typedef struct	s_cub3d
 	int		c_gre;
 	int		c_blu;
 	char	**map;
+	int		player_pos_x;
+	int		player_pos_y;
+	char	player_angle; // n, s, e, w
 }				t_cub3d;
 
 #endif
