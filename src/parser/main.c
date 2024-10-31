@@ -44,12 +44,12 @@ void init_data(t_data *data)
 	data->s_fd = 0;
 	data->e_fd = 0;
 	data->w_fd = 0;
-	data->f_red = 0;
-	data->f_gre = 0;
-	data->f_blu = 0;
-	data->c_red = 0;
-	data->c_gre = 0;
-	data->c_blu = 0;
+	data->f_red = -1;
+	data->f_gre = -1;
+	data->f_blu = -1;
+	data->c_red = -1;
+	data->c_gre = -1;
+	data->c_blu = -1;
 	data->map = NULL;
 	data->player_pos_x = 0.0;
 	data->player_pos_y = 0.0;
@@ -115,11 +115,24 @@ void check_file_extension(t_data *data)
 	err_exit("invalid file exension");
 }
 
+void check_file_existence(t_data *data)
+{
+	data->cub_fd = open(data->arg_path, O_RDONLY);
+	printf("cub_fd: %i\n", data->cub_fd);
+	if (data->cub_fd == -1)
+	{
+		free(data->arg_path);
+		free(data);
+		err_exit("introduced map dont exist");
+	}
+}
+
 void parser(char *arg, t_data *data)
 {
 	init_data(data);
 	check_arg_len(arg, data);
 	check_file_extension(data);
+	check_file_existence(data);
 }
 
 int main(int argc, char **argv)
