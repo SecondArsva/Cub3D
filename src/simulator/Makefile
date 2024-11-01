@@ -26,7 +26,7 @@ clean:
 	$(RM) $(OBJECTS)
 
 fclean: clean
-	cd ./MLX-LNX && make clean && cd .. && $(RM) $(NAME)
+	$(RM) $(NAME) && cd ./MLX-LNX && make clean
 
 re: fclean all
 
