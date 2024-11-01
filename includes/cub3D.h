@@ -6,7 +6,7 @@
 /*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 22:08:17 by davidga2          #+#    #+#             */
-/*   Updated: 2024/11/01 01:07:50 by bmatos-d         ###   ########.fr       */
+/*   Updated: 2024/11/01 01:08:07 by bmatos-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,5 @@ typedef struct	s_data
 	int		player_pos_y;
 	char	player_angle; // n, s, e, w
 }				t_cub3d;
-	float	player_pos_x;
-	float	player_pos_y;
-	t_angle	player_angle;
-}				t_data;
-
-
 
 #endif
