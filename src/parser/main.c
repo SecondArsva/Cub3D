@@ -12,6 +12,46 @@
 
 #include "../../includes/cub3D.h"
 
+/*******************************************************
+	-TO DO-
+	[v] Open File
+	[x] Get lines in a list
+	[x] Parse content
+		[x] Open textures path and get FDs
+		[x] RGB values of Floor and Ceiling
+		[x] Extern Map
+	[x] Check Map
+		[x] Get player axis
+		[x] Get Angle                                                                                                           
+*******************************************************/
+
+void free_data(t_data *data)
+{
+	if (data->arg_path)
+		free(data->arg_path);
+	if (data->cub_fd)
+		close(data->cub_fd);
+	if (data->n_img_path)
+		free(data->n_img_path);
+	if (data->s_img_path)
+		free(data->s_img_path);
+	if (data->e_img_path)
+		free(data->e_img_path);
+	if (data->w_img_path)
+		free(data->w_img_path);
+	if (data->n_fd)
+		close(data->n_fd);
+	if (data->s_fd)
+		close(data->s_fd);
+	if (data->e_fd)
+		close(data->e_fd);
+	if (data->w_fd)
+		close(data->w_fd);
+	if (data->map)
+		ft_free_matrix(data->map);
+	free(data);
+}
+
 void err_exit(char *str)
 {
 	ft_printf_error("cub3D: ");
@@ -36,6 +76,7 @@ void init_data(t_data *data)
 	data->j = 0;
 	data->arg_path = NULL;
 	data->cub_fd = 0;
+	data->map_finded = 0;
 	data->n_img_path = NULL;
 	data->s_img_path = NULL;
 	data->e_img_path = NULL;
@@ -127,12 +168,65 @@ void check_file_existence(t_data *data)
 	}
 }
 
+void proccess_line(char *line, t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] == ' ')
+			i++;
+	if ((!ft_strncmp(&line[i], "NO ", 3) || !ft_strncmp(&line[i], "SO ", 3)
+		|| !ft_strncmp(&line[i], "EA ", 3) || !ft_strncmp(&line[i], "WE ", 3))
+		&& !data->map_finded)
+		printf("Manage texture\n");
+	else if ((!ft_strncmp(&line[i], "F ", 2) || !ft_strncmp(&line[i], "C ", 2))
+		&& !data->map_finded)
+		printf("Manage RGB\n");
+	else if (!ft_strncmp(&line[i], "\n", 1))
+		printf("Empty line\n");
+	else if (!ft_strncmp(&line[i], "1", 1))
+		printf("Map\n");
+	else
+		printf("Vete tu a saber que coño es esto\n");
+}
+
+// Me salto los espacios y evalúo según lo que me encuentre inmediatamente.
+// Si me encuentro un 1 quiere decir que esa línea forma parte del mapa
+// jugable. A partir de él encapsulo todo el contenido que le siga como parte
+// del mapa. Luego lo analizo y ya veo los posibles errores que pueda haber.
+void get_cub_content(t_data *data)
+{
+	char	*line;
+
+	line = NULL;
+	while ("B.J. Blazkowicz")
+	{
+		line = get_next_line(data->cub_fd);
+		if (line == NULL)
+			exit (1);// clear list, close fd, free arg_path, data and exit;
+		printf("%s", line);
+		proccess_line(line, data);
+		free(line);
+	}
+}
+
+// Con esta función verificaré que todo lo que le debo pasar
+// al ray-tracer esté y sino termino el programa.
+void check_content(t_data *data)
+{
+	(void)data;
+}
+
 void parser(char *arg, t_data *data)
 {
 	init_data(data);
+
 	check_arg_len(arg, data);
 	check_file_extension(data);
 	check_file_existence(data);
+
+	get_cub_content(data);
+	check_content(data);
 }
 
 int main(int argc, char **argv)

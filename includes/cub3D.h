@@ -14,6 +14,7 @@
 # define CUB3D_H
 
 # include "../libs/libft/libft.h"
+# include <stdbool.h>
 
 typedef enum	e_angle
 {
@@ -30,6 +31,7 @@ typedef struct	s_data
 	int		j;
 	char	*arg_path;
 	int		cub_fd;
+	bool	map_finded;
 	char	*n_img_path;
 	char	*s_img_path;
 	char	*e_img_path;
@@ -45,9 +47,16 @@ typedef struct	s_data
 	int		c_gre;
 	int		c_blu;
 	char	**map;
-	int		player_pos_x;
-	int		player_pos_y;
-	char	player_angle; // n, s, e, w
-}				t_cub3d;
+	float	player_pos_x;
+	float	player_pos_y;
+	t_angle	player_angle; // n, s, e, w
+}				t_data;
+
+typedef struct	s_keyval
+{
+	char *key;
+	char *val;
+}				t_keyval;
+
 
 #endif
