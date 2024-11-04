@@ -168,7 +168,69 @@ void check_file_existence(t_data *data)
 	}
 }
 
-void proccess_line(char *line, t_data *data)
+void	find_path(t_data *data, char *line, int i, t_type opcode)
+{
+	int	j;
+	char *path;
+
+	path = NULL;
+	j = 0;
+	while (line[i] && line[i] == ' ')
+		i++;
+	j = i;
+	while (line[j] && (line[j] != ' ' && line[j] != '\n'))
+		j++;
+	path = ft_substr(line, i, (j - i) + 1);
+	if (!path)
+		return (free_data(data), exit(1));
+	printf("path: %s", path);
+	sleep(5); // borra
+	
+	(void)opcode;
+}
+
+/*
+	El path de la textura es relativo a la ubicación del archivo .cub,
+	el que tiene el mapa, y no desde la ruta en la que se ejecuta el 
+	programa cub3D, por lo que he de hacer un join de parte de la ruta 
+	del mapa recibido a las texturas que me encuentre.
+
+	
+	Ejemplo A:
+		./cub3D maps/map.cub
+
+		map.cub:
+			NO ../textures/texture.xpm
+	
+		new_texture_path to open: maps/../textures/texture.xpm
+
+	Ejemplo B:
+		./cub3D map.cub
+
+		map.cub:
+			NO texture.xpm
+
+		new_texture_path to open: texture.xpm
+
+	El "i + 2" en manage_texture es para saltarse el identificador y pasar
+	a los espacios que preceden al supuesto contenido especificado,
+	a la ruta de la textura.
+	De igual forma tendré que hacer un "i + 1" en manage_rgb.
+*/
+void	manage_texture(t_data *data, char *line, int i)
+{
+	printf("Manage texture\n");
+	if (!ft_strncmp(&line[i], "NO ", 3))
+		find_path(data, line, i + 2, NO);
+	else if (!ft_strncmp(&line[i], "SO ", 3))
+		find_path(data, line, i + 2, SO);
+	else if (!ft_strncmp(&line[i], "EA ", 3))
+		find_path(data, line, i + 2, EA);
+	else if (!ft_strncmp(&line[i], "WE ", 3))
+		find_path(data, line, i + 2, WE);
+}
+
+void	proccess_line(char *line, t_data *data)
 {
 	int	i;
 
@@ -178,7 +240,7 @@ void proccess_line(char *line, t_data *data)
 	if ((!ft_strncmp(&line[i], "NO ", 3) || !ft_strncmp(&line[i], "SO ", 3)
 		|| !ft_strncmp(&line[i], "EA ", 3) || !ft_strncmp(&line[i], "WE ", 3))
 		&& !data->map_finded)
-		printf("Manage texture\n");
+		manage_texture(data, line, i);
 	else if ((!ft_strncmp(&line[i], "F ", 2) || !ft_strncmp(&line[i], "C ", 2))
 		&& !data->map_finded)
 		printf("Manage RGB\n");
