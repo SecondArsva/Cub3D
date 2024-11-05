@@ -16,6 +16,16 @@
 # include "../libs/libft/libft.h"
 # include <stdbool.h>
 
+typedef enum	e_type
+{
+	NO,
+	SO,
+	EA,
+	WE,
+	F,
+	C,
+}				t_type;
+
 typedef enum	e_angle
 {
 	UNKNOWN,
