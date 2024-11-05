@@ -153,7 +153,7 @@ void check_file_extension(t_data *data)
 		return ;
 	free(data->arg_path);
 	free(data);
-	err_exit("invalid file exension");
+	err_exit("invalid file extension");
 }
 
 void check_file_existence(t_data *data)
@@ -168,6 +168,101 @@ void check_file_existence(t_data *data)
 	}
 }
 
+char *get_head_path(t_data *data)
+{
+	int	i;
+	char *head;
+
+	i = 0;
+	while (data->arg_path[i])
+		i++;
+	i--;
+	while (data->arg_path[i] && data->arg_path[i] != '/')
+		i--;
+	head = ft_substr(data->arg_path, 0, i + 1);
+	printf("head: %s\n", head);
+	return (head);
+}
+
+void check_xpm_extension(char *relative_path, t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (relative_path[i])
+		i++;
+	i -= strlen(".xpm");
+	printf("%i\n", i);
+	if (!ft_strncmp(&relative_path[i], ".xpm", strlen(".xpm") + 1))
+		return ;
+	free(relative_path);
+	free_data(data);
+	err_exit("invalid image extension, the texture must be an .xpm");
+}
+
+void	open_xpm(t_data *data, char *relative_path, t_type opcode)
+{
+	int	fd;
+
+	fd = open(relative_path, O_RDONLY);
+	if (fd == -1)
+	{
+		ft_printf_error("cub3D: error: %s", relative_path);
+		ft_printf_error(" texture dont exists\n");
+		free_data(data);
+		exit(1);
+	}
+	if (opcode == NO)
+		data->n_fd = fd;
+	else if (opcode == SO)
+		data->s_fd = fd;
+	else if (opcode == EA)
+		data->e_fd = fd;
+	else if (opcode == WE)
+		data->w_fd = fd;
+	printf("xpm_fd: %i\n", fd);
+}
+
+void	storage_texture_path(t_data *data, char *relative_path, t_type opcode)
+{
+	check_xpm_extension(relative_path, data);
+	if (opcode == NO)
+		data->n_img_path = relative_path;
+	else if (opcode == SO)
+		data->s_img_path = relative_path;
+	else if (opcode == EA)
+		data->e_img_path = relative_path;
+	else if (opcode == WE)
+		data->w_img_path = relative_path;
+	open_xpm(data, relative_path, opcode);
+}
+
+char	*build_relative_path(t_data *data, char *path)
+{
+	char	*head_path;
+	char	*relative_path;
+
+	head_path = get_head_path(data);
+	if (!head_path)
+	{
+		free(path);
+		free_data(data);
+		exit(1);
+	}
+	relative_path = ft_strjoin(head_path, path);
+	if (!relative_path)
+	{
+		free(head_path);
+		free(path);
+		free_data(data);
+		exit(1);
+	}
+	printf("relative_path: '%s'\n", relative_path);
+	free(path);
+	free(head_path);
+	return (relative_path);
+}
+
 void	find_path(t_data *data, char *line, int i, t_type opcode)
 {
 	int	j;
@@ -180,13 +275,11 @@ void	find_path(t_data *data, char *line, int i, t_type opcode)
 	j = i;
 	while (line[j] && (line[j] != ' ' && line[j] != '\n'))
 		j++;
-	path = ft_substr(line, i, (j - i) + 1);
+	path = ft_substr(line, i, j - i);
 	if (!path)
 		return (free_data(data), exit(1));
 	printf("path: %s", path);
-	sleep(5); // borra
-	
-	(void)opcode;
+	storage_texture_path(data, build_relative_path(data, path), opcode);
 }
 
 /*
