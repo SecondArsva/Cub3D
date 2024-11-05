@@ -92,11 +92,11 @@ void init_data(t_data *data)
 	data->e_fd = -1;
 	data->w_fd = -1;
 	data->f_red = -1;
-	data->f_gre = -1;
-	data->f_blu = -1;
+	data->f_green = -1;
+	data->f_blue = -1;
 	data->c_red = -1;
-	data->c_gre = -1;
-	data->c_blu = -1;
+	data->c_green = -1;
+	data->c_blue = -1;
 	data->map = NULL;
 	data->player_pos_x = 0.0;
 	data->player_pos_y = 0.0;
@@ -305,8 +305,51 @@ void	find_path(t_data *data, char *line, int i, t_type opcode)
 	storage_texture_path(data, build_relative_path(data, path), opcode);
 }
 
+void	storage_value(t_data *data, int num, t_type opcode, t_value value)
+{
+	if (opcode == F && value == RED)
+		data->f_red = num;
+	else if (opcode == F && value == GREEN)
+		data->f_green = num;
+	else if (opcode == F && value == BLUE)
+		data->f_blue = num;
+	else if (opcode == C && value == RED)
+		data->c_red = num;
+	else if (opcode == C && value == GREEN)
+		data->c_green = num;
+	else if (opcode == C && value == BLUE)
+		data->c_blue = num;
+}
+
+void	get_value(t_data *data, char *line, t_type opcode, t_value value)
+{
+	char	*num;
+
+	num = NULL;
+	data->j = data->i;
+	while (line[data->j] && line[data->j] != ',')
+	{
+		if (line[data->j] < '0' && line[data->j] > '9')
+		{
+			free_data(data);
+			err_exit("invalid char in RGB values, use only numbers and comas");
+		}
+		data->j++;
+	}
+	num = ft_substr(line, data->i, data->j - data->i);
+	printf("num: %s\n", num);
+	storage_value(data, atoi(num), opcode, value);
+	free(num);
+}
+
 void	get_rgb(t_data *data, char *line, int i, t_type opcode)
 {
+	while (line[i] && line[i] == ' ')
+		i++;
+	data->i = i;
+	get_value(data, line, opcode, RED);
+	get_value(data, line, opcode, GREEN);
+	get_value(data, line, opcode, BLUE);
 	(void)data;
 	(void)line;
 	(void)i;

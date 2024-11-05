@@ -16,6 +16,13 @@
 # include "../libs/libft/libft.h"
 # include <stdbool.h>
 
+typedef enum	e_value
+{
+	RED,
+	GREEN,
+	BLUE,
+}				t_value;
+
 typedef enum	e_type
 {
 	NO,
@@ -52,12 +59,12 @@ typedef struct	s_data
 	int		w_fd;
 	bool	f_finded;
 	int		f_red;
-	int		f_gre;
-	int		f_blu;
+	int		f_green;
+	int		f_blue;
 	bool	c_finded;
 	int		c_red;
-	int		c_gre;
-	int		c_blu;
+	int		c_green;
+	int		c_blue;
 	char	**map;
 	float	player_pos_x;
 	float	player_pos_y;
