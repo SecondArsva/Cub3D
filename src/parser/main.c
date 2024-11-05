@@ -305,6 +305,14 @@ void	find_path(t_data *data, char *line, int i, t_type opcode)
 	storage_texture_path(data, build_relative_path(data, path), opcode);
 }
 
+void	get_rgb(t_data *data, char *line, int i, t_type opcode)
+{
+	(void)data;
+	(void)line;
+	(void)i;
+	(void)opcode;
+}
+
 /*
 	El path de la textura es relativo a la ubicación del archivo .cub,
 	el que tiene el mapa, y no desde la ruta en la que se ejecuta el 
@@ -333,9 +341,9 @@ void	find_path(t_data *data, char *line, int i, t_type opcode)
 	a la ruta de la textura.
 	De igual forma tendré que hacer un "i + 1" en manage_rgb.
 */
-void	manage_texture(t_data *data, char *line, int i)
+void	manage_parameter(t_data *data, char *line, int i)
 {
-	printf("Manage texture\n");
+	printf("Manage parameter\n");
 	if (!ft_strncmp(&line[i], "NO ", 3))
 		find_path(data, line, i + 2, NO);
 	else if (!ft_strncmp(&line[i], "SO ", 3))
@@ -344,6 +352,10 @@ void	manage_texture(t_data *data, char *line, int i)
 		find_path(data, line, i + 2, EA);
 	else if (!ft_strncmp(&line[i], "WE ", 3))
 		find_path(data, line, i + 2, WE);
+	else if (!ft_strncmp(&line[i], "F ", 2))
+		get_rgb(data, line, i + 1, F);
+	else if (!ft_strncmp(&line[i], "C ", 2))
+		get_rgb(data, line, i + 1, C);
 }
 
 void	proccess_line(char *line, t_data *data)
@@ -354,12 +366,10 @@ void	proccess_line(char *line, t_data *data)
 	while (line[i] == ' ')
 			i++;
 	if ((!ft_strncmp(&line[i], "NO ", 3) || !ft_strncmp(&line[i], "SO ", 3)
-		|| !ft_strncmp(&line[i], "EA ", 3) || !ft_strncmp(&line[i], "WE ", 3))
+		|| !ft_strncmp(&line[i], "EA ", 3) || !ft_strncmp(&line[i], "WE ", 3)
+		|| !ft_strncmp(&line[i], "F ", 2) || !ft_strncmp(&line[i], "C ", 2))
 		&& !data->map_finded)
-		manage_texture(data, line, i);
-	else if ((!ft_strncmp(&line[i], "F ", 2) || !ft_strncmp(&line[i], "C ", 2))
-		&& !data->map_finded)
-		printf("Manage RGB\n");
+		manage_parameter(data, line, i);
 	else if (!ft_strncmp(&line[i], "\n", 1))
 		printf("Empty line\n");
 	else if (!ft_strncmp(&line[i], "1", 1))
