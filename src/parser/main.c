@@ -69,6 +69,13 @@ void incorrect_args(int argc)
 		err_exit("you cant introduce more arguments than a map");
 }
 
+void	init_data_bools(t_data *data)
+{
+	data->map_finded = false;
+	data->f_finded = false;
+	data->c_finded = false;
+}
+
 // inicialización de data para un uso correcto de la estructura.
 void init_data(t_data *data)
 {
@@ -76,7 +83,6 @@ void init_data(t_data *data)
 	data->j = 0;
 	data->arg_path = NULL;
 	data->cub_fd = 0;
-	data->map_finded = 0;
 	data->n_img_path = NULL;
 	data->s_img_path = NULL;
 	data->e_img_path = NULL;
@@ -95,6 +101,7 @@ void init_data(t_data *data)
 	data->player_pos_x = 0.0;
 	data->player_pos_y = 0.0;
 	data->player_angle = UNKNOWN;
+	init_data_bools(data);
 }
 
 // - Comprobar que sea ".cub"
@@ -200,16 +207,19 @@ void check_xpm_extension(char *relative_path, t_data *data)
 	err_exit("invalid image extension, the texture must be an .xpm");
 }
 
-void	close_to_update(t_data *data, t_type opcode)
+void	check_duplicity(t_data *data, t_type opcode, int fd)
 {
-	if (opcode == NO && data->n_fd != -1)
-		close(data->n_fd);
-	if (opcode == SO && data->s_fd != -1)
-		close(data->s_fd);
-	if (opcode == EA && data->e_fd != -1)
-		close(data->e_fd);
-	if (opcode == WE && data->w_fd != -1)
-		close(data->w_fd);
+	if ((opcode == NO && data->n_fd != -1)
+		|| (opcode == SO && data->s_fd != -1)
+		|| (opcode == EA && data->e_fd != -1)
+		|| (opcode == WE && data->w_fd != -1)
+		|| (opcode == F && data->f_finded)
+		|| (opcode == C && data->c_finded))
+	{
+		close(fd);
+		free_data(data);
+		err_exit("duplicate parameter");
+	}
 }
 
 void	open_xpm(t_data *data, char *relative_path, t_type opcode)
@@ -224,7 +234,7 @@ void	open_xpm(t_data *data, char *relative_path, t_type opcode)
 		free_data(data);
 		exit(1);
 	}
-	close_to_update(data, opcode);
+	check_duplicity(data, opcode, fd);
 	if (opcode == NO)
 		data->n_fd = fd;
 	else if (opcode == SO)

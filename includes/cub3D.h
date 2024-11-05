@@ -50,9 +50,11 @@ typedef struct	s_data
 	int		s_fd;
 	int		e_fd;
 	int		w_fd;
+	bool	f_finded;
 	int		f_red;
 	int		f_gre;
 	int		f_blu;
+	bool	c_finded;
 	int		c_red;
 	int		c_gre;
 	int		c_blu;
