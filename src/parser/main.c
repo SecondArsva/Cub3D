@@ -39,13 +39,13 @@ void free_data(t_data *data)
 		free(data->e_img_path);
 	if (data->w_img_path)
 		free(data->w_img_path);
-	if (data->n_fd)
+	if (data->n_fd != -1)
 		close(data->n_fd);
-	if (data->s_fd)
+	if (data->s_fd != -1)
 		close(data->s_fd);
-	if (data->e_fd)
+	if (data->e_fd != -1)
 		close(data->e_fd);
-	if (data->w_fd)
+	if (data->w_fd != -1)
 		close(data->w_fd);
 	if (data->map)
 		ft_free_matrix(data->map);
@@ -81,10 +81,10 @@ void init_data(t_data *data)
 	data->s_img_path = NULL;
 	data->e_img_path = NULL;
 	data->w_img_path = NULL;
-	data->n_fd = 0;
-	data->s_fd = 0;
-	data->e_fd = 0;
-	data->w_fd = 0;
+	data->n_fd = -1;
+	data->s_fd = -1;
+	data->e_fd = -1;
+	data->w_fd = -1;
 	data->f_red = -1;
 	data->f_gre = -1;
 	data->f_blu = -1;
@@ -200,6 +200,18 @@ void check_xpm_extension(char *relative_path, t_data *data)
 	err_exit("invalid image extension, the texture must be an .xpm");
 }
 
+void	close_to_update(t_data *data, t_type opcode)
+{
+	if (opcode == NO && data->n_fd != -1)
+		close(data->n_fd);
+	if (opcode == SO && data->s_fd != -1)
+		close(data->s_fd);
+	if (opcode == EA && data->e_fd != -1)
+		close(data->e_fd);
+	if (opcode == WE && data->w_fd != -1)
+		close(data->w_fd);
+}
+
 void	open_xpm(t_data *data, char *relative_path, t_type opcode)
 {
 	int	fd;
@@ -212,6 +224,7 @@ void	open_xpm(t_data *data, char *relative_path, t_type opcode)
 		free_data(data);
 		exit(1);
 	}
+	close_to_update(data, opcode);
 	if (opcode == NO)
 		data->n_fd = fd;
 	else if (opcode == SO)
