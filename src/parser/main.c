@@ -207,7 +207,7 @@ void check_xpm_extension(char *relative_path, t_data *data)
 	err_exit("invalid image extension, the texture must be an .xpm");
 }
 
-void	check_duplicity(t_data *data, t_type opcode, int fd)
+void	check_texture_duplicity(t_data *data, t_type opcode, int fd)
 {
 	if ((opcode == NO && data->n_fd != -1)
 		|| (opcode == SO && data->s_fd != -1)
@@ -218,7 +218,7 @@ void	check_duplicity(t_data *data, t_type opcode, int fd)
 	{
 		close(fd);
 		free_data(data);
-		err_exit("duplicate parameter");
+		err_exit("duplicate texture parameter");
 	}
 }
 
@@ -234,7 +234,7 @@ void	open_xpm(t_data *data, char *relative_path, t_type opcode)
 		free_data(data);
 		exit(1);
 	}
-	check_duplicity(data, opcode, fd);
+	check_texture_duplicity(data, opcode, fd);
 	if (opcode == NO)
 		data->n_fd = fd;
 	else if (opcode == SO)
@@ -307,6 +307,11 @@ void	find_path(t_data *data, char *line, int i, t_type opcode)
 
 void	storage_value(t_data *data, int num, t_type opcode, t_value value)
 {
+	if (num < 0 || num > 255)
+	{
+		free_data(data);
+		err_exit("an introduced RGB value its out range. Range: 0 to 255");
+	}
 	if (opcode == F && value == RED)
 		data->f_red = num;
 	else if (opcode == F && value == GREEN)
@@ -323,23 +328,48 @@ void	storage_value(t_data *data, int num, t_type opcode, t_value value)
 
 void	get_value(t_data *data, char *line, t_type opcode, t_value value)
 {
-	char	*num;
+	char	*val;
+	int		num;
 
-	num = NULL;
+	val = NULL;
+	while (line[data->i] && line[data->i] == ',')
+		data->i++;
 	data->j = data->i;
-	while (line[data->j] && line[data->j] != ',')
+	while (line[data->j] && line[data->j] != ',' && line[data->j] != '\n')
 	{
-		if (line[data->j] < '0' && line[data->j] > '9')
+		printf("line[j]: %c		", line[data->j]);
+		if (line[data->j] < '0' || line[data->j] > '9')
 		{
 			free_data(data);
 			err_exit("invalid char in RGB values, use only numbers and comas");
 		}
 		data->j++;
 	}
-	num = ft_substr(line, data->i, data->j - data->i);
-	printf("num: %s\n", num);
-	storage_value(data, atoi(num), opcode, value);
-	free(num);
+	val = ft_substr(line, data->i, data->j - data->i); // leak
+	if (!val || !ft_strncmp(val, "\0", 1))
+	{
+		free_data(data);
+		err_exit("you forgot to declare a RGB value");
+	}
+	data->i = data->j + 1;
+	printf("num: %s\n", val);
+	num = atoi(val);
+	printf("atoi: %i\n", num);
+	free(val);
+	storage_value(data, num, opcode, value);
+}
+
+void	check_rgb_duplicity(t_data *data, char *line, t_type opcode)
+{
+	if ((opcode == F
+		&& (data->f_red != -1|| data->f_green != -1 || data->f_blue != -1))
+		|| (opcode == C
+		&& (data->c_red != -1 || data->c_green != -1 || data->c_blue != -1)))
+	{
+		free(line);
+		free_data(data);
+		err_exit("duplicate RGB parameter");
+	}
 }
 
 void	get_rgb(t_data *data, char *line, int i, t_type opcode)
@@ -347,13 +377,10 @@ void	get_rgb(t_data *data, char *line, int i, t_type opcode)
 	while (line[i] && line[i] == ' ')
 		i++;
 	data->i = i;
+	check_rgb_duplicity(data, line, opcode);
 	get_value(data, line, opcode, RED);
 	get_value(data, line, opcode, GREEN);
 	get_value(data, line, opcode, BLUE);
-	(void)data;
-	(void)line;
-	(void)i;
-	(void)opcode;
 }
 
 /*
@@ -413,7 +440,7 @@ void	proccess_line(char *line, t_data *data)
 		|| !ft_strncmp(&line[i], "F ", 2) || !ft_strncmp(&line[i], "C ", 2))
 		&& !data->map_finded)
 		manage_parameter(data, line, i);
-	else if (!ft_strncmp(&line[i], "\n", 1))
+	else if (!ft_strncmp(&line[i], "\n", 1) && !data->map_finded)
 		printf("Empty line\n");
 	else if (!ft_strncmp(&line[i], "1", 1))
 		printf("Map\n");
@@ -434,7 +461,7 @@ void get_cub_content(t_data *data)
 	{
 		line = get_next_line(data->cub_fd);
 		if (line == NULL)
-			exit (1);// clear list, close fd, free arg_path, data and exit;
+			break ; // revisa esto porque en caso de error no se libera una mierda.
 		printf("%s", line);
 		proccess_line(line, data);
 		free(line);
@@ -445,7 +472,18 @@ void get_cub_content(t_data *data)
 // al ray-tracer esté y sino termino el programa.
 void check_content(t_data *data)
 {
-	(void)data;
+	if (data->n_fd == -1 || data->s_fd == -1
+		|| data->e_fd == -1 || data->w_fd == -1)
+	{
+		free_data(data);
+		err_exit("you forgot to declare a texture");
+	}
+	else if (data->f_red == -1 || data->f_green == -1 || data->f_blue == -1
+		|| data->c_red == -1 || data->c_green == -1 || data->c_blue == -1)
+	{
+		free_data(data);
+		err_exit("you forgot to declare a RGB value");
+	}
 }
 
 void parser(char *arg, t_data *data)
