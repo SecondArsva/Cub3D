@@ -16,6 +16,8 @@
 # include "../libs/libft/libft.h"
 # include <stdbool.h>
 
+# define ERR_CHAR_RGB "invalid char in RGB values, use only numbers and comas"
+
 typedef enum	e_value
 {
 	RED,

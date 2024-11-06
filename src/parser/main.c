@@ -60,8 +60,8 @@ void err_exit(char *str)
 	ft_printf_error("\n");
 	exit(1);
 }
-// 
-void incorrect_args(int argc)
+
+void	incorrect_args(int argc)
 {
 	if (argc < 2)
 		err_exit("you must introduce a map as an argument");
@@ -125,19 +125,18 @@ void check_arg_len(char *arg, t_data *data)
 	printf("arg len: %li\n", ft_strlen(data->arg_path));
 	if (ft_strchr(data->arg_path, '/'))
 	{
-			printf("Hay barra\n");
-			while (data->arg_path[data->i])
-				data->i++;
-			data->j = data->i;
-			while (data->j > 0 && data->arg_path[data->j] != '/')
-				data->j--;
-			if ((data->i - 1 - data->j) < 4)
-			{
-				free(data->arg_path);
-				free(data);
-				err_exit("file name its too short to be a '.cub'");
-			}
-
+		printf("Hay barra\n");
+		while (data->arg_path[data->i])
+			data->i++;
+		data->j = data->i;
+		while (data->j > 0 && data->arg_path[data->j] != '/')
+			data->j--;
+		if ((data->i - 1 - data->j) < 4)
+		{
+			free(data->arg_path);
+			free(data);
+			err_exit("file name its too short to be a '.cub'");
+		}
 	}
 	else if (ft_strlen(data->arg_path) < 4)
 		err_exit("file name its too short to be a '.cub'");
@@ -326,6 +325,12 @@ void	storage_value(t_data *data, int num, t_type opcode, t_value value)
 		data->c_blue = num;
 }
 
+void	wipe(t_data *data, char *str)
+{
+	free_data(data);
+	err_exit(str);
+}
+
 void	get_value(t_data *data, char *line, t_type opcode, t_value value)
 {
 	char	*val;
@@ -339,18 +344,12 @@ void	get_value(t_data *data, char *line, t_type opcode, t_value value)
 	{
 		printf("line[j]: %c		", line[data->j]);
 		if (line[data->j] < '0' || line[data->j] > '9')
-		{
-			free_data(data);
-			err_exit("invalid char in RGB values, use only numbers and comas");
-		}
+			wipe(data, ERR_CHAR_RGB);
 		data->j++;
 	}
-	val = ft_substr(line, data->i, data->j - data->i); // leak
+	val = ft_substr(line, data->i, data->j - data->i);
 	if (!val || !ft_strncmp(val, "\0", 1))
-	{
-		free_data(data);
-		err_exit("you forgot to declare a RGB value");
-	}
+		wipe(data, "you forgot to declare a RGB value");
 	data->i = data->j + 1;
 	printf("num: %s\n", val);
 	num = atoi(val);
@@ -368,7 +367,7 @@ void	check_rgb_duplicity(t_data *data, char *line, t_type opcode)
 	{
 		free(line);
 		free_data(data);
-		err_exit("duplicate RGB parameter");
+		err_exit("duplicate RGB parameter.");
 	}
 }
 
@@ -498,6 +497,27 @@ void parser(char *arg, t_data *data)
 	check_content(data);
 }
 
+void	print_data(t_data *data)
+{
+	printf("\n----------------- DATA -----------------\n\n");
+	printf("arg_path:	%s\n", data->arg_path);
+	printf("cub_fd:		%i\n", data->cub_fd);
+	printf("n_img_path:	%s\n", data->n_img_path);
+	printf("s_img_path:	%s\n", data->s_img_path);
+	printf("e_img_path:	%s\n", data->e_img_path);
+	printf("w_img_path:	%s\n", data->w_img_path);
+	printf("n_fd:		%i\n", data->n_fd);
+	printf("s_fd:		%i\n", data->s_fd);
+	printf("e_fd:		%i\n", data->e_fd);
+	printf("w_fd:		%i\n", data->w_fd);
+	printf("f_red:		%i\n", data->f_red);
+	printf("f_green:	%i\n", data->f_green);
+	printf("f_blue:		%i\n", data->f_blue);
+	printf("c_red:		%i\n", data->c_red);
+	printf("c_green:	%i\n", data->c_green);
+	printf("c_blue:		%i\n", data->c_blue);
+}
+
 int main(int argc, char **argv)
 {
 	t_data *data;
@@ -507,6 +527,6 @@ int main(int argc, char **argv)
 		incorrect_args(argc);
 	printf("%s\n", argv[1]);
 	parser(argv[1], data);
-	// print_data(data);
+	print_data(data);
 	return (0);
 }
