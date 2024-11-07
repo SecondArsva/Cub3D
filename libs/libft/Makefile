@@ -79,7 +79,10 @@ SRC = ft_isalpha.c				\
 	  safe_strdup.c				\
 	  safe_substr.c				\
 	  safe_itoa.c				\
-	  safe_strtrim.c
+	  safe_strtrim.c			\
+	  ft_sarradd.c				\
+	  ft_sarrsize.c				\
+	  ft_sarrfree.c
 
 # Headers like you see.
 HEADERS = libft.h
