@@ -439,7 +439,7 @@ void	manage_map(t_data *data, char *line)
 	data->map_finded = true;
 	while (line[i] && line[i] != '\n')
 		i++;
-	no_break = ft_substr(line, 0, i - 1);
+	no_break = ft_substr(line, 0, i);
 	if (!no_break)
 	{
 		free(line);
@@ -532,11 +532,40 @@ void	map_player(t_data *data)
 		data->player_angle = WEST;
 }
 
+int	is_valid_map_char(char c)
+{
+	if (c == '1' || c == '0' || c == ' '
+		|| c == 'N' || c == 'S' || c == 'E' || c == 'W')
+		return (1);
+	return (0);
+}
+
+void	map_chars(t_data *data)
+{
+	int i;
+	int j;
+	
+	i = 0;
+	j = 0;
+	while (data->map[i])
+	{
+		while (data->map[i][j])
+		{
+			if (!is_valid_map_char(data->map[i][j]))
+				wipe(data, "invalid map, use only 0, 1, N, S, E, W or spaces");
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+}
+
 void	check_map(t_data *data)
 {
 	data->i = 0;
 	data->j = 0;
 
+	map_chars(data);
 	while (data->map[data->i])
 	{
 		while (data->map[data->i][data->j])
@@ -553,6 +582,7 @@ void	check_map(t_data *data)
 			data->j++;
 		}
 		data->i++;
+		data->j = 0;
 	}
 	if (!data->player_finded)
 		wipe(data, "player position not declared, use N, S, E or W");
