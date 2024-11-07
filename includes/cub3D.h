@@ -51,6 +51,7 @@ typedef struct	s_data
 	char	*arg_path;
 	int		cub_fd;
 	bool	map_finded;
+	bool	player_finded;
 	char	*n_img_path;
 	char	*s_img_path;
 	char	*e_img_path;

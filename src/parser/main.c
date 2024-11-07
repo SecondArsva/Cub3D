@@ -72,6 +72,7 @@ void	incorrect_args(int argc)
 void	init_data_bools(t_data *data)
 {
 	data->map_finded = false;
+	data->player_finded = false;
 	data->f_finded = false;
 	data->c_finded = false;
 }
@@ -427,6 +428,26 @@ void	manage_parameter(t_data *data, char *line, int i)
 		get_rgb(data, line, i + 1, C);
 }
 
+void	manage_map(t_data *data, char *line)
+{
+	char	*no_break;
+	int		i;
+
+	no_break = NULL;
+	i = 0;
+	printf("Map\n");
+	data->map_finded = true;
+	while (line[i] && line[i] != '\n')
+		i++;
+	no_break = ft_substr(line, 0, i - 1);
+	if (!no_break)
+	{
+		free(line);
+		wipe(data, "substr alloc failed");
+	}
+	data->map = ft_sarradd(data->map, no_break);
+}
+
 void	proccess_line(char *line, t_data *data)
 {
 	int	i;
@@ -442,9 +463,12 @@ void	proccess_line(char *line, t_data *data)
 	else if (!ft_strncmp(&line[i], "\n", 1) && !data->map_finded)
 		printf("Empty line\n");
 	else if (!ft_strncmp(&line[i], "1", 1))
-		printf("Map\n");
+		manage_map(data, line);
 	else
-		printf("Vete tu a saber que coño es esto\n");
+	{
+		free(line);
+		wipe(data, "Invalid parameter or empty line inside/after map section");
+	}
 }
 
 // Me salto los espacios y evalúo según lo que me encuentre inmediatamente.
@@ -467,6 +491,73 @@ void get_cub_content(t_data *data)
 	}
 }
 
+void	map_floor(t_data *data)
+{
+	int	i;
+	int	j;
+
+	i = data->i;
+	j = data->j;
+	if (!data->map[i - 1][j] || data->map[i - 1][j] == ' ' 
+		|| !data->map[i + 1][j] || data->map[i + 1][j] == ' '
+		|| !data->map[i][j - 1] || data->map[i][j - 1] == ' '
+		|| !data->map[i][j + 1] || data->map[i][j + 1] == ' ')
+		wipe(data, "open map, all floor tiles must be sorrounded by walls");
+}
+
+void	map_player(t_data *data)
+{
+	int	i;
+	int	j;
+
+	if (data->player_finded)
+		wipe(data, "multiple player positions finded");
+	i = data->i;
+	j = data->j;
+	data->player_finded = true;
+	if (!data->map[i - 1][j] || data->map[i - 1][j] == ' ' 
+		|| !data->map[i + 1][j] || data->map[i + 1][j] == ' '
+		|| !data->map[i][j - 1] || data->map[i][j - 1] == ' '
+		|| !data->map[i][j + 1] || data->map[i][j + 1] == ' ')
+		wipe(data, "open map, player tile must be sorrounded by walls");
+	data->player_pos_y = data->i + 0.5;
+	data->player_pos_x = data->j + 0.5;
+	if (data->map[i][j] == 'N')
+		data->player_angle = NORTH;
+	else if (data->map[i][j] == 'S')
+		data->player_angle = SOUTH;
+	else if (data->map[i][j] == 'E')
+		data->player_angle = EAST;
+	else if (data->map[i][j] == 'W')
+		data->player_angle = WEST;
+}
+
+void	check_map(t_data *data)
+{
+	data->i = 0;
+	data->j = 0;
+
+	while (data->map[data->i])
+	{
+		while (data->map[data->i][data->j])
+		{
+			// meter un check 10NSEW\0
+			printf("----: '%c'\n", data->map[data->i][data->j]);
+			if (data->map[data->i][data->j] == '0')
+				map_floor(data);
+			else if (data->map[data->i][data->j] == 'N'
+				|| data->map[data->i][data->j] == 'S'
+				|| data->map[data->i][data->j] == 'E'
+				|| data->map[data->i][data->j] == 'W')
+				map_player(data);
+			data->j++;
+		}
+		data->i++;
+	}
+	if (!data->player_finded)
+		wipe(data, "player position not declared, use N, S, E or W");
+}
+
 // Con esta función verificaré que todo lo que le debo pasar
 // al ray-tracer esté y sino termino el programa.
 void check_content(t_data *data)
@@ -483,6 +574,7 @@ void check_content(t_data *data)
 		free_data(data);
 		err_exit("you forgot to declare a RGB value");
 	}
+	check_map(data);
 }
 
 void parser(char *arg, t_data *data)
@@ -500,22 +592,26 @@ void parser(char *arg, t_data *data)
 void	print_data(t_data *data)
 {
 	printf("\n----------------- DATA -----------------\n\n");
-	printf("arg_path:	%s\n", data->arg_path);
-	printf("cub_fd:		%i\n", data->cub_fd);
-	printf("n_img_path:	%s\n", data->n_img_path);
-	printf("s_img_path:	%s\n", data->s_img_path);
-	printf("e_img_path:	%s\n", data->e_img_path);
-	printf("w_img_path:	%s\n", data->w_img_path);
-	printf("n_fd:		%i\n", data->n_fd);
-	printf("s_fd:		%i\n", data->s_fd);
-	printf("e_fd:		%i\n", data->e_fd);
-	printf("w_fd:		%i\n", data->w_fd);
-	printf("f_red:		%i\n", data->f_red);
-	printf("f_green:	%i\n", data->f_green);
-	printf("f_blue:		%i\n", data->f_blue);
-	printf("c_red:		%i\n", data->c_red);
-	printf("c_green:	%i\n", data->c_green);
-	printf("c_blue:		%i\n", data->c_blue);
+	printf("arg_path:		%s\n", data->arg_path);
+	printf("cub_fd:			%i\n", data->cub_fd);
+	printf("n_img_path:		%s\n", data->n_img_path);
+	printf("s_img_path:		%s\n", data->s_img_path);
+	printf("e_img_path:		%s\n", data->e_img_path);
+	printf("w_img_path:		%s\n", data->w_img_path);
+	printf("n_fd:			%i\n", data->n_fd);
+	printf("s_fd:			%i\n", data->s_fd);
+	printf("e_fd:			%i\n", data->e_fd);
+	printf("w_fd:			%i\n", data->w_fd);
+	printf("f_red:			%i\n", data->f_red);
+	printf("f_green:		%i\n", data->f_green);
+	printf("f_blue:			%i\n", data->f_blue);
+	printf("c_red:			%i\n", data->c_red);
+	printf("c_green:		%i\n", data->c_green);
+	printf("c_blue:			%i\n", data->c_blue);
+	ft_print_matrix(data->map, "map: ");
+	printf("player_pos_x:	%f\n", data->player_pos_x);	
+	printf("player_pos_y:	%f\n", data->player_pos_y);
+	printf("player_angle:	%i\n", data->player_angle);
 }
 
 int main(int argc, char **argv)
