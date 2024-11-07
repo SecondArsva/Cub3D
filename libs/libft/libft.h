@@ -132,7 +132,7 @@ char	*safe_strtrim(char const *s1, char const *set);
 
 // Cub3D addons
 char	**ft_sarradd(char **arr, char *string);
-int     ft_sarrsize(char **arr);
-void    ft_sarrfree(char ***arr);
+int		ft_sarrsize(char **arr);
+void	ft_sarrfree(char ***arr);
 
 #endif
