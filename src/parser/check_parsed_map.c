@@ -19,7 +19,7 @@ void	map_floor(t_data *data)
 
 	i = data->i;
 	j = data->j;
-	if (!data->map[i - 1][j] || data->map[i - 1][j] == ' ' 
+	if (!data->map[i - 1][j] || data->map[i - 1][j] == ' '
 		|| !data->map[i + 1][j] || data->map[i + 1][j] == ' '
 		|| !data->map[i][j - 1] || data->map[i][j - 1] == ' '
 		|| !data->map[i][j + 1] || data->map[i][j + 1] == ' ')
@@ -36,7 +36,7 @@ void	map_player(t_data *data)
 	i = data->i;
 	j = data->j;
 	data->player_finded = true;
-	if (!data->map[i - 1][j] || data->map[i - 1][j] == ' ' 
+	if (!data->map[i - 1][j] || data->map[i - 1][j] == ' '
 		|| !data->map[i + 1][j] || data->map[i + 1][j] == ' '
 		|| !data->map[i][j - 1] || data->map[i][j - 1] == ' '
 		|| !data->map[i][j + 1] || data->map[i][j + 1] == ' ')
@@ -63,9 +63,9 @@ int	is_valid_map_char(char c)
 
 void	map_chars(t_data *data)
 {
-	int i;
-	int j;
-	
+	int	i;
+	int	j;
+
 	i = 0;
 	j = 0;
 	while (data->map[i])
@@ -85,13 +85,11 @@ void	check_map(t_data *data)
 {
 	data->i = 0;
 	data->j = 0;
-
 	map_chars(data);
 	while (data->map[data->i])
 	{
 		while (data->map[data->i][data->j])
 		{
-			printf("----: '%c'\n", data->map[data->i][data->j]);
 			if (data->map[data->i][data->j] == '0')
 				map_floor(data);
 			else if (data->map[data->i][data->j] == 'N'

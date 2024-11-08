@@ -12,7 +12,7 @@
 
 #include "../../includes/cub3D.h"
 
-void free_data(t_data *data)
+void	free_data(t_data *data)
 {
 	if (data->arg_path)
 		free(data->arg_path);
@@ -39,7 +39,7 @@ void free_data(t_data *data)
 	free(data);
 }
 
-void err_exit(char *str)
+void	err_exit(char *str)
 {
 	ft_printf_error("cub3D: ");
 	ft_printf_error("error: ");

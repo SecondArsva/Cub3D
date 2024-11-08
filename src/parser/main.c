@@ -32,19 +32,18 @@ void	print_data(t_data *data)
 	printf("c_green:		%i\n", data->c_green);
 	printf("c_blue:			%i\n", data->c_blue);
 	ft_print_matrix(data->map, "map: ");
-	printf("player_pos_x:	%f\n", data->player_pos_x);	
+	printf("player_pos_x:	%f\n", data->player_pos_x);
 	printf("player_pos_y:	%f\n", data->player_pos_y);
 	printf("player_angle:	%i\n", data->player_angle);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_data *data;
+	t_data	*data;
 
 	data = safe_malloc(sizeof(t_data));
 	if (argc != 2)
 		incorrect_args(argc);
-	printf("%s\n", argv[1]);
 	parser(argv[1], data);
 	print_data(data);
 	free_data(data);

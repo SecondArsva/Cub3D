@@ -19,7 +19,6 @@ void	manage_map(t_data *data, char *line)
 
 	no_break = NULL;
 	i = 0;
-	printf("Map\n");
 	data->map_finded = true;
 	while (line[i] && line[i] != '\n')
 		i++;
@@ -62,7 +61,6 @@ void	get_value(t_data *data, char *line, t_type opcode, t_value value)
 	data->j = data->i;
 	while (line[data->j] && line[data->j] != ',' && line[data->j] != '\n')
 	{
-		printf("line[j]: %c		", line[data->j]);
 		if (line[data->j] < '0' || line[data->j] > '9')
 			wipe(data, ERR_CHAR_RGB);
 		data->j++;
@@ -71,9 +69,7 @@ void	get_value(t_data *data, char *line, t_type opcode, t_value value)
 	if (!val || !ft_strncmp(val, "\0", 1))
 		wipe(data, "you forgot to declare a RGB value");
 	data->i = data->j + 1;
-	printf("num: %s\n", val);
 	num = atoi(val);
-	printf("atoi: %i\n", num);
 	free(val);
 	storage_value(data, num, opcode, value);
 }
@@ -81,9 +77,11 @@ void	get_value(t_data *data, char *line, t_type opcode, t_value value)
 void	check_rgb_duplicity(t_data *data, char *line, t_type opcode)
 {
 	if ((opcode == F
-		&& (data->f_red != -1|| data->f_green != -1 || data->f_blue != -1))
+			&& (data->f_red != -1 || data->f_green != -1
+				|| data->f_blue != -1))
 		|| (opcode == C
-		&& (data->c_red != -1 || data->c_green != -1 || data->c_blue != -1)))
+			&& (data->c_red != -1 || data->c_green != -1
+				|| data->c_blue != -1)))
 	{
 		free(line);
 		free_data(data);

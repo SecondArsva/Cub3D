@@ -48,10 +48,9 @@ void	open_xpm(t_data *data, char *relative_path, t_type opcode)
 		data->e_fd = fd;
 	else if (opcode == WE)
 		data->w_fd = fd;
-	printf("xpm_fd: %i\n", fd);
 }
 
-void check_xpm_extension(char *relative_path, t_data *data)
+void	check_xpm_extension(char *relative_path, t_data *data)
 {
 	int	i;
 
@@ -59,7 +58,6 @@ void check_xpm_extension(char *relative_path, t_data *data)
 	while (relative_path[i])
 		i++;
 	i -= strlen(".xpm");
-	printf("%i\n", i);
 	if (!ft_strncmp(&relative_path[i], ".xpm", strlen(".xpm") + 1))
 		return ;
 	free(relative_path);
@@ -67,10 +65,10 @@ void check_xpm_extension(char *relative_path, t_data *data)
 	err_exit("invalid image extension, the texture must be an .xpm");
 }
 
-char *get_head_path(t_data *data)
+char	*get_head_path(t_data *data)
 {
-	int	i;
-	char *head;
+	int		i;
+	char	*head;
 
 	i = 0;
 	while (data->arg_path[i])
@@ -79,6 +77,5 @@ char *get_head_path(t_data *data)
 	while (data->arg_path[i] && data->arg_path[i] != '/')
 		i--;
 	head = ft_substr(data->arg_path, 0, i + 1);
-	printf("head: %s\n", head);
 	return (head);
 }

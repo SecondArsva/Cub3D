@@ -28,8 +28,8 @@ void	init_data_bools(t_data *data)
 	data->c_finded = false;
 }
 
-// inicialización de data para un uso correcto de la estructura.
-void init_data(t_data *data)
+/*	data initialization for correct use of the structure */
+void	init_data(t_data *data)
 {
 	data->i = 0;
 	data->j = 0;
@@ -56,14 +56,12 @@ void init_data(t_data *data)
 	init_data_bools(data);
 }
 
-void parser(char *arg, t_data *data)
+void	parser(char *arg, t_data *data)
 {
 	init_data(data);
-
 	check_arg_len(arg, data);
 	check_file_extension(data);
 	check_file_existence(data);
-
 	get_cub_content(data);
 	check_parsed_content(data);
 }

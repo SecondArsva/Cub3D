@@ -12,9 +12,7 @@
 
 #include "../../includes/cub3D.h"
 
-// Con esta función verificaré que todo lo que le debo pasar
-// al ray-tracer esté y sino termino el programa.
-void check_parsed_content(t_data *data)
+void	check_parsed_content(t_data *data)
 {
 	if (data->n_fd == -1 || data->s_fd == -1
 		|| data->e_fd == -1 || data->w_fd == -1)

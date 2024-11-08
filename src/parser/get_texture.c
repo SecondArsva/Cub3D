@@ -46,7 +46,6 @@ char	*build_relative_path(t_data *data, char *path)
 		free_data(data);
 		exit(1);
 	}
-	printf("relative_path: '%s'\n", relative_path);
 	free(path);
 	free(head_path);
 	return (relative_path);
@@ -54,8 +53,8 @@ char	*build_relative_path(t_data *data, char *path)
 
 void	find_path(t_data *data, char *line, int i, t_type opcode)
 {
-	int	j;
-	char *path;
+	int		j;
+	char	*path;
 
 	path = NULL;
 	j = 0;
@@ -67,6 +66,5 @@ void	find_path(t_data *data, char *line, int i, t_type opcode)
 	path = ft_substr(line, i, j - i);
 	if (!path)
 		return (free_data(data), exit(1));
-	printf("path: %s", path);
 	storage_texture_path(data, build_relative_path(data, path), opcode);
 }
