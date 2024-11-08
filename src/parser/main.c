@@ -446,6 +446,7 @@ void	manage_map(t_data *data, char *line)
 		wipe(data, "substr alloc failed");
 	}
 	data->map = ft_sarradd(data->map, no_break);
+	free(no_break);
 }
 
 void	proccess_line(char *line, t_data *data)
@@ -650,5 +651,6 @@ int main(int argc, char **argv)
 	printf("%s\n", argv[1]);
 	parser(argv[1], data);
 	print_data(data);
+	free_data(data);
 	return (0);
 }
