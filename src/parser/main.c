@@ -467,7 +467,7 @@ void	proccess_line(char *line, t_data *data)
 	else
 	{
 		free(line);
-		wipe(data, "Invalid parameter or empty line inside/after map section");
+		wipe(data, "invalid parameter or empty line inside/after map section");
 	}
 }
 
@@ -594,16 +594,12 @@ void check_content(t_data *data)
 {
 	if (data->n_fd == -1 || data->s_fd == -1
 		|| data->e_fd == -1 || data->w_fd == -1)
-	{
-		free_data(data);
-		err_exit("you forgot to declare a texture");
-	}
+		wipe(data, "you forgot to declare a texture");
 	else if (data->f_red == -1 || data->f_green == -1 || data->f_blue == -1
 		|| data->c_red == -1 || data->c_green == -1 || data->c_blue == -1)
-	{
-		free_data(data);
-		err_exit("you forgot to declare a RGB value");
-	}
+		wipe(data, "you forgot to declare a RGB value");
+	else if (!data->map_finded)
+		wipe(data, "no map finded in the cub file");
 	check_map(data);
 }
 
