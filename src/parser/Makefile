@@ -7,7 +7,16 @@ RM = rm -f
 LIBFT_DIR = ../../libs/libft/
 LIBFT = $(LIBFT_DIR)libft.a
 
-SRC =	main.c			\
+SRC =	main.c					\
+		parser.c				\
+		cub_file_preliminary.c	\
+		cub_file_scraping.c		\
+		get_texture.c			\
+		get_texture_utils.c		\
+		get_rgb_and_map.c		\
+		check_parsed_content.c	\
+		check_parsed_map.c		\
+		failure.c				\
 
 OBJS = $(SRC:%.c=%.o)
 

@@ -80,11 +80,8 @@ typedef struct	s_keyval
 	char *val;
 }				t_keyval;
 
-
-//		### --- MAIN --- ###
-void	incorrect_args(int argc);
-
 //		### --- PARSER --- ###
+void	incorrect_args(int argc);
 void	parser(char *arg, t_data *data);
 void	init_data(t_data *data);
 void	init_data_bools(t_data *data);
@@ -114,7 +111,7 @@ void	check_texture_duplicity(t_data *data, t_type opcode, int fd);
 void	get_rgb(t_data *data, char *line, int i, t_type opcode);
 void	check_rgb_duplicity(t_data *data, char *line, t_type opcode);
 void	get_value(t_data *data, char *line, t_type opcode, t_value value);
-void	get_value(t_data *data, char *line, t_type opcode, t_value value);
+void	storage_value(t_data *data, int num, t_type opcode, t_value value);
 void	manage_map(t_data *data, char *line);
 
 //		### --- CHECK PARSED CONTENT--- ###
