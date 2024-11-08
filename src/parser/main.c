@@ -66,7 +66,7 @@ void	incorrect_args(int argc)
 	if (argc < 2)
 		err_exit("you must introduce a map as an argument");
 	else if (argc > 2)
-		err_exit("you cant introduce more arguments than a map");
+		err_exit("you cant introduce more arguments than a single map");
 }
 
 void	init_data_bools(t_data *data)
@@ -591,7 +591,7 @@ void	check_map(t_data *data)
 
 // Con esta función verificaré que todo lo que le debo pasar
 // al ray-tracer esté y sino termino el programa.
-void check_content(t_data *data)
+void check_parsed_content(t_data *data)
 {
 	if (data->n_fd == -1 || data->s_fd == -1
 		|| data->e_fd == -1 || data->w_fd == -1)
@@ -613,7 +613,7 @@ void parser(char *arg, t_data *data)
 	check_file_existence(data);
 
 	get_cub_content(data);
-	check_content(data);
+	check_parsed_content(data);
 }
 
 void	print_data(t_data *data)

@@ -81,4 +81,55 @@ typedef struct	s_keyval
 }				t_keyval;
 
 
+//		### --- MAIN --- ###
+void	incorrect_args(int argc);
+
+//		### --- PARSER --- ###
+void	parser(char *arg, t_data *data);
+void	init_data(t_data *data);
+void	init_data_bools(t_data *data);
+
+//		### --- CUB FILE PRELIMINARY--- ###
+void	check_arg_len(char *arg, t_data *data);
+void	check_file_extension(t_data *data);
+void	check_file_existence(t_data *data);
+
+//		### --- CUB FILE SCRAPING --- ###
+void	get_cub_content(t_data *data);
+void	proccess_line(char *line, t_data *data);
+void	manage_parameter(t_data *data, char *line, int i);
+
+//		### --- GET TEXTURE --- ###
+void	find_path(t_data *data, char *line, int i, t_type opcode);
+char	*build_relative_path(t_data *data, char *path);
+void	storage_texture_path(t_data *data, char *relative_path, t_type opcode);
+
+//		### --- GET TEXTURE UTILS --- ###
+char	*get_head_path(t_data *data);
+void	check_xpm_extension(char *relative_path, t_data *data);
+void	open_xpm(t_data *data, char *relative_path, t_type opcode);
+void	check_texture_duplicity(t_data *data, t_type opcode, int fd);
+
+//		### --- GET RGB & MAP--- ###
+void	get_rgb(t_data *data, char *line, int i, t_type opcode);
+void	check_rgb_duplicity(t_data *data, char *line, t_type opcode);
+void	get_value(t_data *data, char *line, t_type opcode, t_value value);
+void	get_value(t_data *data, char *line, t_type opcode, t_value value);
+void	manage_map(t_data *data, char *line);
+
+//		### --- CHECK PARSED CONTENT--- ###
+void	check_parsed_content(t_data *data);
+
+//		### --- CHECK PARSED MAP --- ###
+void	check_map(t_data *data);
+void	map_chars(t_data *data);
+int		is_valid_map_char(char c);
+void	map_floor(t_data *data);
+void	map_player(t_data *data);
+
+//		### --- FAILURE --- ###
+void	wipe(t_data *data, char *str);
+void	free_data(t_data *data);
+void	err_exit(char *str);
+
 #endif
