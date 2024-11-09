@@ -43,7 +43,7 @@ int	main(int argc, char **argv)
 
 	data = safe_malloc(sizeof(t_data));
 	if (argc != 2)
-		incorrect_args(argc);
+		incorrect_args(data, argc);
 	parser(argv[1], data);
 	print_data(data);
 	free_data(data);

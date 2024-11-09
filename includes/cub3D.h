@@ -81,7 +81,7 @@ typedef struct	s_keyval
 }				t_keyval;
 
 //		### --- PARSER --- ###
-void	incorrect_args(int argc);
+void	incorrect_args(t_data *data, int argc);
 void	parser(char *arg, t_data *data);
 void	init_data(t_data *data);
 void	init_data_bools(t_data *data);
