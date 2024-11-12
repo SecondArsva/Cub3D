@@ -12,7 +12,7 @@
 
 #include "../../includes/cub3D.h"
 
-void	check_texture_duplicity(t_data *data, t_type opcode, int fd)
+void	check_texture_duplicity(t_data *data, t_type opcode, int fd, char *line)
 {
 	if ((opcode == NO && data->n_fd != -1)
 		|| (opcode == SO && data->s_fd != -1)
@@ -22,24 +22,22 @@ void	check_texture_duplicity(t_data *data, t_type opcode, int fd)
 		|| (opcode == C && data->c_finded))
 	{
 		close(fd);
-		free_data(data);
-		err_exit("duplicate texture parameter");
+		free(line);
+		wipe(data, "duplicate texture parameter");
 	}
 }
 
-void	open_xpm(t_data *data, char *relative_path, t_type opcode)
+void	open_xpm(t_data *data, char *relative_path, t_type opcode, char *line)
 {
 	int	fd;
 
 	fd = open(relative_path, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_printf_error("cub3D: error: %s", relative_path);
-		ft_printf_error(" texture dont exists\n");
-		free_data(data);
-		exit(1);
+		free(line);
+		wipe(data, " texture dont exists");
 	}
-	check_texture_duplicity(data, opcode, fd);
+	check_texture_duplicity(data, opcode, fd, line);
 	if (opcode == NO)
 		data->n_fd = fd;
 	else if (opcode == SO)
@@ -50,7 +48,7 @@ void	open_xpm(t_data *data, char *relative_path, t_type opcode)
 		data->w_fd = fd;
 }
 
-void	check_xpm_extension(char *relative_path, t_data *data)
+void	check_xpm_extension(char *relative_path, t_data *data, char *line)
 {
 	int	i;
 
@@ -60,9 +58,9 @@ void	check_xpm_extension(char *relative_path, t_data *data)
 	i -= strlen(".xpm");
 	if (!ft_strncmp(&relative_path[i], ".xpm", strlen(".xpm") + 1))
 		return ;
+	free(line);
 	free(relative_path);
-	free_data(data);
-	err_exit("invalid image extension, the texture must be an .xpm");
+	wipe(data, "invalid image extension, the texture must be a .xpm");
 }
 
 char	*get_head_path(t_data *data)

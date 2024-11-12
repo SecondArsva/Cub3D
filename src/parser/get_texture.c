@@ -12,9 +12,9 @@
 
 #include "../../includes/cub3D.h"
 
-void	storage_texture_path(t_data *data, char *relative_path, t_type opcode)
+void	storage_texture_path(t_data *data, char *relative_path, t_type opcode, char *line)
 {
-	check_xpm_extension(relative_path, data);
+	check_xpm_extension(relative_path, data, line);
 	if (opcode == NO)
 		data->n_img_path = relative_path;
 	else if (opcode == SO)
@@ -23,10 +23,10 @@ void	storage_texture_path(t_data *data, char *relative_path, t_type opcode)
 		data->e_img_path = relative_path;
 	else if (opcode == WE)
 		data->w_img_path = relative_path;
-	open_xpm(data, relative_path, opcode);
+	open_xpm(data, relative_path, opcode, line);
 }
 
-char	*build_relative_path(t_data *data, char *path)
+char	*build_relative_path(t_data *data, char *path, char *line)
 {
 	char	*head_path;
 	char	*relative_path;
@@ -35,19 +35,17 @@ char	*build_relative_path(t_data *data, char *path)
 	if (!head_path)
 	{
 		free(path);
-		free_data(data);
-		exit(1);
+		free(line);
+		wipe(data, "memory allocation failure");
 	}
 	relative_path = ft_strjoin(head_path, path);
-	if (!relative_path)
-	{
-		free(head_path);
-		free(path);
-		free_data(data);
-		exit(1);
-	}
 	free(path);
 	free(head_path);
+	if (!relative_path)
+	{
+		free(line);
+		wipe(data, "memory allocation failure");
+	}
 	return (relative_path);
 }
 
@@ -65,6 +63,9 @@ void	find_path(t_data *data, char *line, int i, t_type opcode)
 		j++;
 	path = ft_substr(line, i, j - i);
 	if (!path)
-		return (free_data(data), exit(1));
-	storage_texture_path(data, build_relative_path(data, path), opcode);
+	{
+		free(line);
+		wipe(data, "memory allocation failure");
+	}
+	storage_texture_path(data, build_relative_path(data, path, line), opcode, line);
 }

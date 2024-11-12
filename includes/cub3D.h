@@ -98,14 +98,14 @@ void	manage_parameter(t_data *data, char *line, int i);
 
 //		### --- GET TEXTURE --- ###
 void	find_path(t_data *data, char *line, int i, t_type opcode);
-char	*build_relative_path(t_data *data, char *path);
-void	storage_texture_path(t_data *data, char *relative_path, t_type opcode);
+char	*build_relative_path(t_data *data, char *path, char *line);
+void	storage_texture_path(t_data *data, char *relative_path, t_type opcode, char *line);
 
 //		### --- GET TEXTURE UTILS --- ###
 char	*get_head_path(t_data *data);
-void	check_xpm_extension(char *relative_path, t_data *data);
-void	open_xpm(t_data *data, char *relative_path, t_type opcode);
-void	check_texture_duplicity(t_data *data, t_type opcode, int fd);
+void	check_xpm_extension(char *relative_path, t_data *data, char *line);
+void	open_xpm(t_data *data, char *relative_path, t_type opcode, char *line);
+void	check_texture_duplicity(t_data *data, t_type opcode, int fd, char *line);
 
 //		### --- GET RGB & MAP--- ###
 void	get_rgb(t_data *data, char *line, int i, t_type opcode);

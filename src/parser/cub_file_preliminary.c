@@ -48,7 +48,7 @@ void	check_file_extension(t_data *data)
 		return ;
 	free(data->arg_path);
 	free(data);
-	err_exit("invalid file extension");
+	err_exit("invalid file extension, the map must be a .cub");
 }
 
 void	check_file_existence(t_data *data)
