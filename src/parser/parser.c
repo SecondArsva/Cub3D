@@ -12,8 +12,9 @@
 
 #include "../../includes/cub3D.h"
 
-void	incorrect_args(int argc)
+void	incorrect_args(t_data **data, int argc)
 {
+	free(*data);
 	if (argc < 2)
 		err_exit("you must introduce a map as an argument");
 	else if (argc > 2)
