@@ -22,7 +22,8 @@ void	check_texture_duplicity(t_data *data, t_type opcode, int fd)
 		|| (opcode == C && data->c_finded))
 	{
 		close(fd);
-		wipe(data, "duplicate texture parameter");
+		free_data(data);
+		err_exit("duplicate texture parameter");
 	}
 }
 
@@ -31,9 +32,13 @@ void	open_xpm(t_data *data, char *relative_path, t_type opcode)
 	int	fd;
 
 	fd = open(relative_path, O_RDONLY);
-	free(relative_path);
 	if (fd == -1)
-		wipe(data, "a texture dont exists");
+	{
+		ft_printf_error("cub3D: error: %s", relative_path);
+		ft_printf_error(" texture dont exists\n");
+		free_data(data);
+		exit(1);
+	}
 	check_texture_duplicity(data, opcode, fd);
 	if (opcode == NO)
 		data->n_fd = fd;
@@ -56,7 +61,8 @@ void	check_xpm_extension(char *relative_path, t_data *data)
 	if (!ft_strncmp(&relative_path[i], ".xpm", strlen(".xpm") + 1))
 		return ;
 	free(relative_path);
-	wipe(data, "invalid image extension, the texture must be an .xpm");
+	free_data(data);
+	err_exit("invalid image extension, the texture must be an .xpm");
 }
 
 char	*get_head_path(t_data *data)
@@ -71,7 +77,5 @@ char	*get_head_path(t_data *data)
 	while (data->arg_path[i] && data->arg_path[i] != '/')
 		i--;
 	head = ft_substr(data->arg_path, 0, i + 1);
-	if (!head)
-		wipe(data, "memory allocation failed");
 	return (head);
 }

@@ -32,12 +32,19 @@ char	*build_relative_path(t_data *data, char *path)
 	char	*relative_path;
 
 	head_path = get_head_path(data);
+	if (!head_path)
+	{
+		free(path);
+		free_data(data);
+		exit(1);
+	}
 	relative_path = ft_strjoin(head_path, path);
 	if (!relative_path)
 	{
 		free(head_path);
 		free(path);
-		wipe(data, "memory allocation failed");
+		free_data(data);
+		exit(1);
 	}
 	free(path);
 	free(head_path);
@@ -57,8 +64,7 @@ void	find_path(t_data *data, char *line, int i, t_type opcode)
 	while (line[j] && (line[j] != ' ' && line[j] != '\n'))
 		j++;
 	path = ft_substr(line, i, j - i);
-	free(line);
 	if (!path)
-		wipe(data, "memory allocation failed");
+		return (free_data(data), exit(1));
 	storage_texture_path(data, build_relative_path(data, path), opcode);
 }
