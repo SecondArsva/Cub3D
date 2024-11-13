@@ -18,14 +18,14 @@
 
 # define ERR_CHAR_RGB "invalid char in RGB values, use only numbers and comas"
 
-typedef enum	e_value
+typedef enum e_value
 {
 	RED,
 	GREEN,
 	BLUE,
-}				t_value;
+}			t_value;
 
-typedef enum	e_type
+typedef enum e_type
 {
 	NO,
 	SO,
@@ -33,18 +33,18 @@ typedef enum	e_type
 	WE,
 	F,
 	C,
-}				t_type;
+}			t_type;
 
-typedef enum	e_angle
+typedef enum e_angle
 {
 	UNKNOWN,
 	NORTH,
 	SOUTH,
 	EAST,
 	WEST,
-}				t_angle;
+}			t_angle;
 
-typedef struct	s_data
+typedef struct s_data
 {
 	int		i;
 	int		j;
@@ -74,11 +74,11 @@ typedef struct	s_data
 	t_angle	player_angle; // n, s, e, w
 }				t_data;
 
-typedef struct	s_keyval
+typedef struct s_keyval
 {
-	char *key;
-	char *val;
-}				t_keyval;
+	char	*key;
+	char	*val;
+}			t_keyval;
 
 //		### --- PARSER --- ###
 void	incorrect_args(t_data **data, int argc);
@@ -99,13 +99,15 @@ void	manage_parameter(t_data *data, char *line, int i);
 //		### --- GET TEXTURE --- ###
 void	find_path(t_data *data, char *line, int i, t_type opcode);
 char	*build_relative_path(t_data *data, char *path, char *line);
-void	storage_texture_path(t_data *data, char *relative_path, t_type opcode, char *line);
+void	storage_texture_path(t_data *data, char *relative_path, t_type opcode,
+			char *line);
 
 //		### --- GET TEXTURE UTILS --- ###
 char	*get_head_path(t_data *data);
 void	check_xpm_extension(char *relative_path, t_data *data, char *line);
 void	open_xpm(t_data *data, char *relative_path, t_type opcode, char *line);
-void	check_texture_duplicity(t_data *data, t_type opcode, int fd, char *line);
+void	check_texture_duplicity(t_data *data, t_type opcode, char *line,
+			char *relative_path);
 
 //		### --- GET RGB & MAP--- ###
 void	get_rgb(t_data *data, char *line, int i, t_type opcode);

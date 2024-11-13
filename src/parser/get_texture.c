@@ -12,8 +12,10 @@
 
 #include "../../includes/cub3D.h"
 
-void	storage_texture_path(t_data *data, char *relative_path, t_type opcode, char *line)
+void	storage_texture_path(t_data *data, char *relative_path, t_type opcode,
+			char *line)
 {
+	check_texture_duplicity(data, opcode, line, relative_path);
 	check_xpm_extension(relative_path, data, line);
 	if (opcode == NO)
 		data->n_img_path = relative_path;
@@ -67,5 +69,6 @@ void	find_path(t_data *data, char *line, int i, t_type opcode)
 		free(line);
 		wipe(data, "memory allocation failure");
 	}
-	storage_texture_path(data, build_relative_path(data, path, line), opcode, line);
+	storage_texture_path(data, build_relative_path(data, path, line),
+		opcode, line);
 }

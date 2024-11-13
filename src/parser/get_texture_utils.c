@@ -12,7 +12,8 @@
 
 #include "../../includes/cub3D.h"
 
-void	check_texture_duplicity(t_data *data, t_type opcode, int fd, char *line)
+void	check_texture_duplicity(t_data *data, t_type opcode, char *line,
+			char *relative_path)
 {
 	if ((opcode == NO && data->n_fd != -1)
 		|| (opcode == SO && data->s_fd != -1)
@@ -21,8 +22,8 @@ void	check_texture_duplicity(t_data *data, t_type opcode, int fd, char *line)
 		|| (opcode == F && data->f_finded)
 		|| (opcode == C && data->c_finded))
 	{
-		close(fd);
 		free(line);
+		free(relative_path);
 		wipe(data, "duplicate texture parameter");
 	}
 }
@@ -37,7 +38,6 @@ void	open_xpm(t_data *data, char *relative_path, t_type opcode, char *line)
 		free(line);
 		wipe(data, " texture dont exists");
 	}
-	check_texture_duplicity(data, opcode, fd, line);
 	if (opcode == NO)
 		data->n_fd = fd;
 	else if (opcode == SO)
