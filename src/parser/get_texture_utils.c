@@ -36,7 +36,7 @@ void	open_xpm(t_data *data, char *relative_path, t_type opcode, char *line)
 	if (fd == -1)
 	{
 		free(line);
-		wipe(data, " texture dont exists");
+		wipe(data, "texture dont exists");
 	}
 	if (opcode == NO)
 		data->n_fd = fd;
