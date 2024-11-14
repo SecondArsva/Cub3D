@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   failure.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davidga2 <davidga2@student.42madrid.com>   #+#  +:+       +#+        */
+/*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-11-08 05:41:25 by davidga2          #+#    #+#             */
-/*   Updated: 2024-11-08 05:41:25 by davidga2         ###   ########.fr       */
+/*   Created: 2024/11/08 05:41:25 by davidga2          #+#    #+#             */
+/*   Updated: 2024/11/14 01:44:22 by bmatos-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,15 @@ void	err_exit(char *str)
 
 void	wipe(t_data *data, char *str)
 {
+	char *line;
+	while ("B.J. Blazkowicz")
+	{
+		line = get_next_line(data->cub_fd);
+		if (line == NULL)
+			break ;
+		printf("%s\n", line);
+		free(line);
+	}
 	free_data(data);
 	err_exit(str);
 }
