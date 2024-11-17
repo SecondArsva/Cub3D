@@ -50,7 +50,9 @@ void	err_exit(char *str)
 
 void	wipe(t_data *data, char *str)
 {
-	char *line;
+	char	*line;
+
+	line = NULL;
 	while ("B.J. Blazkowicz")
 	{
 		line = get_next_line(data->cub_fd);

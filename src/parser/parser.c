@@ -54,6 +54,7 @@ void	init_data(t_data *data)
 	data->player_pos_x = 0.0;
 	data->player_pos_y = 0.0;
 	data->player_angle = UNKNOWN;
+	data->line = NULL;
 	init_data_bools(data);
 }
 

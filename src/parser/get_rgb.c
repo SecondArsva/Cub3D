@@ -1,41 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_rgb_and_map.c                                  :+:      :+:    :+:   */
+/*   get_rgb.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: davidga2 <davidga2@student.42madrid.com>   #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-11-08 05:46:36 by davidga2          #+#    #+#             */
-/*   Updated: 2024-11-08 05:46:36 by davidga2         ###   ########.fr       */
+/*   Created: 2024-11-17 08:28:39 by davidga2          #+#    #+#             */
+/*   Updated: 2024-11-17 08:28:39 by davidga2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3D.h"
 
-void	manage_map(t_data *data, char *line)
-{
-	char	*no_break;
-	int		i;
-
-	no_break = NULL;
-	i = 0;
-	data->map_finded = true;
-	while (line[i] && line[i] != '\n')
-		i++;
-	no_break = ft_substr(line, 0, i);
-	if (!no_break)
-	{
-		free(line);
-		wipe(data, "substr alloc failed");
-	}
-	data->map = ft_sarradd(data->map, no_break);
-	free(no_break);
-}
-
 void	storage_value(t_data *data, int num, t_type opcode, t_value value)
 {
 	if (num < 0 || num > 255)
+	{
+		free(data->line);
 		wipe(data, "an introduced RGB value its out range. Range: 0 to 255");
+	}
 	if (opcode == F && value == RED)
 		data->f_red = num;
 	else if (opcode == F && value == GREEN)
@@ -50,6 +33,17 @@ void	storage_value(t_data *data, int num, t_type opcode, t_value value)
 		data->c_blue = num;
 }
 
+void	empty_value(t_data *data, char *val, char *line)
+{
+	if (!val || !ft_strncmp(val, "\0", 1))
+	{
+		if (val)
+			free(val);
+		free(line);
+		wipe(data, "you forgot to declare a RGB value");
+	}
+}
+
 void	get_value(t_data *data, char *line, t_type opcode, t_value value)
 {
 	char	*val;
@@ -62,12 +56,14 @@ void	get_value(t_data *data, char *line, t_type opcode, t_value value)
 	while (line[data->j] && line[data->j] != ',' && line[data->j] != '\n')
 	{
 		if (line[data->j] < '0' || line[data->j] > '9')
+		{
+			free(line);
 			wipe(data, ERR_CHAR_RGB);
+		}
 		data->j++;
 	}
 	val = ft_substr(line, data->i, data->j - data->i);
-	if (!val || !ft_strncmp(val, "\0", 1))
-		wipe(data, "you forgot to declare a RGB value");
+	empty_value(data, val, line);
 	data->i = data->j + 1;
 	num = atoi(val);
 	free(val);
@@ -84,8 +80,7 @@ void	check_rgb_duplicity(t_data *data, char *line, t_type opcode)
 				|| data->c_blue != -1)))
 	{
 		free(line);
-		free_data(data);
-		err_exit("duplicate RGB parameter.");
+		wipe(data, "duplicate RGB parameter");
 	}
 }
 

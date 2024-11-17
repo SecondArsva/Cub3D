@@ -62,6 +62,7 @@ void	get_cub_content(t_data *data)
 	while ("B.J. Blazkowicz")
 	{
 		line = get_next_line(data->cub_fd);
+		data->line = line;
 		if (line == NULL)
 			break ;
 		proccess_line(line, data);

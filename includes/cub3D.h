@@ -72,6 +72,7 @@ typedef struct s_data
 	float	player_pos_x;
 	float	player_pos_y;
 	t_angle	player_angle; // n, s, e, w
+	char	*line;
 }				t_data;
 
 typedef struct s_keyval
@@ -109,14 +110,17 @@ void	open_xpm(t_data *data, char *relative_path, t_type opcode, char *line);
 void	check_texture_duplicity(t_data *data, t_type opcode, char *line,
 			char *relative_path);
 
-//		### --- GET RGB & MAP--- ###
+//		### --- GET RGB --- ###
 void	get_rgb(t_data *data, char *line, int i, t_type opcode);
 void	check_rgb_duplicity(t_data *data, char *line, t_type opcode);
 void	get_value(t_data *data, char *line, t_type opcode, t_value value);
 void	storage_value(t_data *data, int num, t_type opcode, t_value value);
+void	empty_value(t_data *data, char *val, char *line);
+
+//		### --- GET MAP --- ###
 void	manage_map(t_data *data, char *line);
 
-//		### --- CHECK PARSED CONTENT--- ###
+//		### --- CHECK PARSED CONTENT --- ###
 void	check_parsed_content(t_data *data);
 
 //		### --- CHECK PARSED MAP --- ###

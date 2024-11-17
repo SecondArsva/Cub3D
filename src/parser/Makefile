@@ -13,7 +13,8 @@ SRC =	main.c					\
 		cub_file_scraping.c		\
 		get_texture.c			\
 		get_texture_utils.c		\
-		get_rgb_and_map.c		\
+		get_rgb.c				\
+		get_map.c				\
 		check_parsed_content.c	\
 		check_parsed_map.c		\
 		failure.c				\
