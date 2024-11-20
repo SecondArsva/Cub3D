@@ -6,7 +6,7 @@
 /*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 23:46:37 by bmatos-d          #+#    #+#             */
-/*   Updated: 2024/11/01 00:45:49 by bmatos-d         ###   ########.fr       */
+/*   Updated: 2024/11/19 17:24:03 by bmatos-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,10 +136,7 @@ void	wall_height(t_parsed_data *global)
 
 int	colour(t_parsed_data *global, int direction)
 {
-	return ((int)(global->texture_buffer[direction]
-		[(int)(global->wall_impact * 160) + 160 * (int)(160 * \
-	((global->current_y_pixel - (double)global->draw_start) \
-	/ ((double)global->wall_height)))]));
+	return ((int)(global->texture_buffer[direction][(int)(global->wall_impact * 160) + 160 * (int)(160 * ((global->current_y_pixel - (double)global->draw_start) / ((double)global->wall_height)))]));
 }
 
 void	drawing(t_parsed_data *global)

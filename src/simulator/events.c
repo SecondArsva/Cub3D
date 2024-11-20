@@ -6,7 +6,7 @@
 /*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 23:43:48 by bmatos-d          #+#    #+#             */
-/*   Updated: 2024/11/01 00:55:48 by bmatos-d         ###   ########.fr       */
+/*   Updated: 2024/11/19 18:14:17 by bmatos-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,19 +72,20 @@ static void	move(double dir, t_parsed_data *global)
 static int	key_handler(int keysym, t_parsed_data *global)
 {
 	if (keysym == XK_Escape)
-		return (close_handler(global), 1);
-	else if (keysym == XK_Left)
-		return ((void)(global->angle += 0.1), render(global), 1);
-	else if (keysym == XK_Right)
-		return ((void)(global->angle -= 0.1), render(global), 1);
-	else if (keysym == XK_W || keysym == XK_w)
-		return (move(FORWARD * M_PI * 0.5, global), render(global), 1);
-	else if (keysym == XK_S || keysym == XK_s)
-		return (move(BACKWARD * M_PI * 0.5, global), render(global), 1);
-	else if (keysym == XK_A || keysym == XK_a)
-		return (move(LEFT * M_PI * 0.5, global), render(global), 1);
-	else if (keysym == XK_D || keysym == XK_d)
-		return (move(RIGHT * M_PI * 0.5, global), render(global), 1);
+		close_handler(global);
+	if (keysym == XK_Left)
+		global->angle += 0.1;
+	if (keysym == XK_Right)
+		global->angle -= 0.1;
+	if (keysym == XK_W || keysym == XK_w)
+		move(FORWARD * M_PI * 0.5, global);
+	if (keysym == XK_S || keysym == XK_s)
+		move(BACKWARD * M_PI * 0.5, global);
+	if (keysym == XK_A || keysym == XK_a)
+		move(LEFT * M_PI * 0.5, global);
+	if (keysym == XK_D || keysym == XK_d)
+		move(RIGHT * M_PI * 0.5, global);
+	render(global);
 	return (0);
 }
 

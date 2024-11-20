@@ -6,7 +6,7 @@
 /*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 23:40:35 by bmatos-d          #+#    #+#             */
-/*   Updated: 2024/11/01 00:25:14 by bmatos-d         ###   ########.fr       */
+/*   Updated: 2024/11/20 12:50:37 by bmatos-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 #define WIN_HEI 	218
 #define TITLE	 	"Cub3d Preliminary"
 #define SCALE		1
-#define SPEED 		0.3
+#define SPEED 		1.3
 #define PLN_WID 	0.66
 #define FORWARD 	0
 #define BACKWARD 	2

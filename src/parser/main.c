@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davidga2 <davidga2@student.42madrid.com>   #+#  +:+       +#+        */
+/*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-10-30 22:27:39 by davidga2          #+#    #+#             */
-/*   Updated: 2024-10-30 22:27:39 by davidga2         ###   ########.fr       */
+/*   Created: 2024/10/30 22:27:39 by davidga2          #+#    #+#             */
+/*   Updated: 2024/11/20 16:53:33 by bmatos-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3D.h"
+#include "../../includes/Parsing.h"
 
 void	print_data(t_data *data)
 {
@@ -37,7 +37,7 @@ void	print_data(t_data *data)
 	printf("player_angle:	%i\n", data->player_angle);
 }
 
-int	main(int argc, char **argv)
+/* int	main(int argc, char **argv)
 {
 	t_data	*data;
 
@@ -49,3 +49,4 @@ int	main(int argc, char **argv)
 	free_data(data);
 	return (0);
 }
+ */

@@ -1,0 +1,66 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile - sim                                     :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/11/20 12:57:01 by bmatos-d          #+#    #+#              #
+#    Updated: 2024/11/20 13:07:32 by bmatos-d         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+NAME = cub3d
+
+COMPILE = gcc
+FLAGS = -Werror -Wextra -Wall -g3
+LINKS = -LMLX-LNX -lmlx_Linux -lX11 -lXext -lm -lreadline
+LIBFT_DIR = ../../libs/libft/
+LIBFT = $(LIBFT_DIR)libft.a
+
+MLX_PATH = ./MLX-LNX/
+MLX = $(MLX_PATH)libmlx_Linux.a
+
+PARS_PATH = ./parser
+PARS_SRCS =	main.c					\
+			parser.c				\
+			cub_file_preliminary.c	\
+			cub_file_scraping.c		\
+			get_texture.c			\
+			get_texture_utils.c		\
+			get_rgb.c				\
+			get_map.c				\
+			check_parsed_content.c	\
+			check_parsed_map.c		\
+			failure.c
+
+EXEC_PATH = ./simulator
+EXEC_SRCS = simulation.c	\
+			events.c		\
+			render1.c		\
+			render2.c		\
+			init.c
+
+SOURCES  := $(addprefix $(BLTN_PATH)/,$(BLTN_SRCS)) \
+			$(addprefix $(ENVR_PATH)/,$(ENVR_SRCS))
+
+OBJECTS = $(SOURCES:.c=.o)
+
+$(LIBFT):
+	$(MAKE) -C $(LIBFT_DIR)
+
+all: $(MLX) $(LIBFT) $(NAME)
+
+$(MLX):
+	cd $(MLX_PATH) && make
+
+$(NAME): $(OBJECTS)
+	$(COMPILE) $(FLAGS) $(OBJECTS) $(LINKS) -o $(NAME) $(LIBFT)
+
+clean:
+	$(RM) $(OBJECTS) ; cd $(MLX_PATH) ; make clean ; cd ../$(LIBFT_DIR) ; make clean
+
+fclean: clean
+	$(RM) $(NAME) ; cd $(MLX_PATH) ; make fclean ; cd ../$(LIBFT_DIR) ; make fclean
+
+re: fclean all

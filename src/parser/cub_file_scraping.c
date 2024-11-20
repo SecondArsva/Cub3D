@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cub_file_scraping.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davidga2 <davidga2@student.42madrid.com>   #+#  +:+       +#+        */
+/*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-11-08 05:59:42 by davidga2          #+#    #+#             */
-/*   Updated: 2024-11-08 05:59:42 by davidga2         ###   ########.fr       */
+/*   Created: 2024/11/08 05:59:42 by davidga2          #+#    #+#             */
+/*   Updated: 2024/11/20 16:53:19 by bmatos-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3D.h"
+#include "../../includes/Parsing.h"
 
 void	manage_parameter(t_data *data, char *line, int i)
 {

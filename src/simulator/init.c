@@ -6,7 +6,7 @@
 /*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 00:05:33 by bmatos-d          #+#    #+#             */
-/*   Updated: 2024/11/01 00:39:53 by bmatos-d         ###   ########.fr       */
+/*   Updated: 2024/11/20 12:49:59 by bmatos-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,41 @@ static void	window_init(t_parsed_data *global)
 //  ┌──────────────────────────────────────────────────────────────────────────┐
 //  │							    STRUCTINIT								   │
 //  └──────────────────────────────────────────────────────────────────────────┘
-static void	load_texture(t_parsed_data *global, int direction, char *texture)
-{
-	int	img_width;
-	int	img_height;
+int file_exists(const char *path) {
+    return access(path, F_OK) != -1;
+}
 
-	global->texture_images[direction] = mlx_xpm_file_to_image(global->mlx_con,
-			texture, &img_width, &img_height);
-	if (global->texture_images[direction] == NULL)
-		return ((void)printf("fail"));
-	global->texture_buffer[direction] = (unsigned int *)mlx_get_data_addr(\
-	global->texture_images[direction], &img_height, &img_height, &img_height);
+void load_texture(t_parsed_data *global, int direction,  char *texture)
+{
+	int img_height;
+    if (!file_exists(texture))
+	{
+        fprintf(stderr, "Error: Texture file %s not found!\n", texture);
+        return;
+    }
+	if (!global->mlx_con)
+		printf("ERROR\n");
+    global->texture_images[direction] = mlx_xpm_file_to_image(global->mlx_con, texture, &img_height, &img_height);
+
+    if (!global->texture_images[direction]) {
+        fprintf(stderr, "Error: Failed to load texture from file %s!\n", texture);
+        return;
+    }
+
+    global->texture_buffer[direction] = (unsigned int *)mlx_get_data_addr(
+        global->texture_images[direction], &img_height, &img_height, &img_height);
+    if (!global->texture_buffer[direction]) {
+        fprintf(stderr, "Error: Failed to get texture data for %s!\n", texture);
+        return;
+    }
 }
 
 static void	load_textures(t_parsed_data *global)
 {
-	load_texture(global, NORTH, "/home/bmatos-d/Desktop/cuuuu/textures/amethyst_160x160.xpm");
-	load_texture(global, EAST, "/home/bmatos-d/Desktop/cuuuu/textures/end_stone_160x160.xpm");
-	load_texture(global, SOUTH, "/home/bmatos-d/Desktop/cuuuu/textures/grass_block_160x160.xpm");
-	load_texture(global, WEST, "/home/bmatos-d/Desktop/cuuuu/textures/warped_nylium_160x160.xpm");
+	load_texture(global, NORTH, "../../textures/amethyst_160x160.xpm");
+	load_texture(global, EAST, "../../textures/end_stone_160x160.xpm");
+	load_texture(global, SOUTH, "../../textures/grass_block_160x160.xpm");
+	load_texture(global, WEST, "../../textures/warped_nylium_160x160.xpm");
 }
 
 t_parsed_data *parsing_temp()

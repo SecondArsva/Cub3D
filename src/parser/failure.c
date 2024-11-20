@@ -6,11 +6,11 @@
 /*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 05:41:25 by davidga2          #+#    #+#             */
-/*   Updated: 2024/11/14 02:24:39 by bmatos-d         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:53:20 by bmatos-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3D.h"
+#include "../../includes/Parsing.h"
 
 void	free_data(t_data *data)
 {
