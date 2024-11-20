@@ -6,14 +6,14 @@
 #    By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/20 12:57:01 by bmatos-d          #+#    #+#              #
-#    Updated: 2024/11/20 16:50:50 by bmatos-d         ###   ########.fr        #
+#    Updated: 2024/11/20 18:49:25 by bmatos-d         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
 
-COMPILE = gcc
-CFLAGS = -Werror -Wextra -Wall -g3 -fPIE
+CC = gcc
+CFLAGS = -Werror -Wextra -Wall -g3
 LIBFT_DIR = ../libs/libft/
 LIBFT = $(LIBFT_DIR)libft.a
 LINKS = -L./simulator/MLX-LNX -lmlx_Linux -lX11 -lXext -lm
@@ -56,7 +56,7 @@ $(MLX):
 	cd $(MLX_PATH) && make
 
 $(NAME): $(OBJECTS)
-	$(COMPILE) $(LIBFT) -pie $(LINKS) $(CFLAGS) $(OBJECTS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME) $(LINKS) $(MLX) $(LIBFT)
 
 clean:
 	$(RM) $(OBJECTS)

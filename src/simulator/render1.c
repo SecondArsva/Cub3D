@@ -6,7 +6,7 @@
 /*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 23:46:37 by bmatos-d          #+#    #+#             */
-/*   Updated: 2024/11/19 17:24:03 by bmatos-d         ###   ########.fr       */
+/*   Updated: 2024/11/20 22:45:48 by bmatos-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ void	draw_ceiling_floor(t_parsed_data *global)
 					&global->mlx_img, global->btm_colour);
 		}
 	}
-	mlx_put_image_to_window(global->mlx_con, global->mlx_win,
-		global->mlx_img.img_ptr, 0, 0);
 }
 
 void	data(t_parsed_data *global)
@@ -194,4 +192,6 @@ void	render(t_parsed_data *global)
 		drawing(global);
 		global->horizontal_pixel++;
 	}
+	mlx_put_image_to_window(global->mlx_con, global->mlx_win,
+		global->mlx_img.img_ptr, 0, 0);
 }

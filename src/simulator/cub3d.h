@@ -6,13 +6,14 @@
 /*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 23:40:35 by bmatos-d          #+#    #+#             */
-/*   Updated: 2024/11/20 12:50:37 by bmatos-d         ###   ########.fr       */
+/*   Updated: 2024/11/20 22:47:33 by bmatos-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //  ┌──────────────────────────────────────────────────────────────────────────┐
 //  │							 	HEADER									   │
 //  └──────────────────────────────────────────────────────────────────────────┘
+#include "../../includes/Parsing.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -23,11 +24,11 @@
 #include <fcntl.h>
 #include "./MLX-LNX/mlx.h"
 #define NUM_TXT 	4
-#define WIN_WID 	396
-#define WIN_HEI 	218
+#define WIN_WID  	800
+#define WIN_HEI 	650
 #define TITLE	 	"Cub3d Preliminary"
 #define SCALE		1
-#define SPEED 		1.3
+#define SPEED 		0.3
 #define PLN_WID 	0.66
 #define FORWARD 	0
 #define BACKWARD 	2
@@ -100,4 +101,4 @@ typedef struct s_parsed_data
 int				close_handler(t_parsed_data *global);
 void			render(t_parsed_data *global);
 void			events_init(t_parsed_data *global);
-t_parsed_data	*parsing_temp(void);
+t_parsed_data	*parsing_temp(t_data *data);
