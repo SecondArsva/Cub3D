@@ -6,7 +6,7 @@
 /*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 23:40:35 by bmatos-d          #+#    #+#             */
-/*   Updated: 2024/11/20 22:47:33 by bmatos-d         ###   ########.fr       */
+/*   Updated: 2024/11/20 23:19:24 by bmatos-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 #include "./MLX-LNX/mlx.h"
 #define NUM_TXT 	4
 #define WIN_WID  	800
-#define WIN_HEI 	650
+#define WIN_HEI 	550
 #define TITLE	 	"Cub3d Preliminary"
 #define SCALE		1
 #define SPEED 		0.3
@@ -98,6 +98,9 @@ typedef struct s_parsed_data
 //  │							 	FUNCTIONS								   │
 //  └──────────────────────────────────────────────────────────────────────────┘
 
+void			my_pixel_put(int x, int y, t_img *img, int colour);
+int				colour(t_parsed_data *global, int direction);
+void			data(t_parsed_data *global);
 int				close_handler(t_parsed_data *global);
 void			render(t_parsed_data *global);
 void			events_init(t_parsed_data *global);

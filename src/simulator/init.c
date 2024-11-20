@@ -6,7 +6,7 @@
 /*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 00:05:33 by bmatos-d          #+#    #+#             */
-/*   Updated: 2024/11/20 22:36:24 by bmatos-d         ###   ########.fr       */
+/*   Updated: 2024/11/20 23:30:43 by bmatos-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,33 +42,22 @@ static void	window_init(t_parsed_data *global)
 //  ┌──────────────────────────────────────────────────────────────────────────┐
 //  │							    STRUCTINIT								   │
 //  └──────────────────────────────────────────────────────────────────────────┘
-int file_exists(const char *path) {
-    return access(path, F_OK) != -1;
+
+int	file_exists(const char *path)
+{
+	return (access(path, F_OK) != -1);
 }
 
-void load_texture(t_parsed_data *global, int direction,  char *texture)
+void	load_texture(t_parsed_data *global, int direction, char *texture)
 {
-	int img_height;
-    if (!file_exists(texture))
-	{
-        fprintf(stderr, "Error: Texture file %s not found!\n", texture);
-        return;
-    }
-	if (!global->mlx_con)
-		printf("ERROR\n");
-    global->texture_images[direction] = mlx_xpm_file_to_image(global->mlx_con, texture, &img_height, &img_height);
+	int	img_height;
+	//ERROR CHECK HERE
 
-    if (!global->texture_images[direction]) {
-        fprintf(stderr, "Error: Failed to load texture from file %s!\n", texture);
-        return;
-    }
-
-    global->texture_buffer[direction] = (unsigned int *)mlx_get_data_addr(
-        global->texture_images[direction], &img_height, &img_height, &img_height);
-    if (!global->texture_buffer[direction]) {
-        fprintf(stderr, "Error: Failed to get texture data for %s!\n", texture);
-        return;
-    }
+	global->texture_images[direction] = mlx_xpm_file_to_image(global->mlx_con,
+			texture, &img_height, &img_height);
+	global->texture_buffer[direction] = (unsigned int *)mlx_get_data_addr(\
+			global->texture_images[direction], &img_height,
+			&img_height, &img_height);
 }
 
 static void	load_textures(t_parsed_data *global, t_data *data)
@@ -79,10 +68,10 @@ static void	load_textures(t_parsed_data *global, t_data *data)
 	load_texture(global, WEST, data->w_img_path);
 }
 
-t_parsed_data *parsing_temp(t_data *data)
+t_parsed_data	*parsing_temp(t_data *data)
 {
-	t_parsed_data *ret;
-	// HAY QUE HACER LASS TEXTURAS NULAS AQUI
+	t_parsed_data	*ret;
+
 	ret = calloc(sizeof(t_parsed_data), 1);
 	ret->top_colour = data->c_red << 16 | data->c_green << 8 | data->c_blue;
 	ret->btm_colour = data->f_red << 16 | data->f_green << 8 | data->f_blue;
@@ -90,7 +79,7 @@ t_parsed_data *parsing_temp(t_data *data)
 	ret->angle = data->player_angle * M_PI / 2;
 	ret->pos_y = data->player_pos_x;
 	ret->pos_x = data->player_pos_y;
-    window_init(ret);
-    load_textures(ret, data);
-	return(ret);
+	window_init(ret);
+	load_textures(ret, data);
+	return (ret);
 }
