@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   failure.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: davidga2 <davidga2@student.42madrid.com>   #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/08 05:41:25 by davidga2          #+#    #+#             */
-/*   Updated: 2024/11/20 18:06:00 by bmatos-d         ###   ########.fr       */
+/*   Created: 2024-11-23 04:27:44 by davidga2          #+#    #+#             */
+/*   Updated: 2024-11-23 04:27:44 by davidga2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/Parsing.h"
+#include "../../includes/cub3d.h"
 
 void	free_data(t_data *data)
 {

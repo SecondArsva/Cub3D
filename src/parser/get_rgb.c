@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_rgb.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: davidga2 <davidga2@student.42madrid.com>   #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/17 08:28:39 by davidga2          #+#    #+#             */
-/*   Updated: 2024/11/20 16:53:26 by bmatos-d         ###   ########.fr       */
+/*   Created: 2024-11-23 04:30:06 by davidga2          #+#    #+#             */
+/*   Updated: 2024-11-23 04:30:06 by davidga2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/Parsing.h"
+#include "../../includes/cub3d.h"
 
 void	storage_value(t_data *data, int num, t_type opcode, t_value value)
 {

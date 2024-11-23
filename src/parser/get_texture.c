@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_texture.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: davidga2 <davidga2@student.42madrid.com>   #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/08 05:57:56 by davidga2          #+#    #+#             */
-/*   Updated: 2024/11/20 16:53:31 by bmatos-d         ###   ########.fr       */
+/*   Created: 2024-11-23 04:29:49 by davidga2          #+#    #+#             */
+/*   Updated: 2024-11-23 04:29:49 by davidga2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/Parsing.h"
+#include "../../includes/cub3d.h"
 
 void	storage_texture_path(t_data *data, char *relative_path, t_type opcode,
 			char *line)

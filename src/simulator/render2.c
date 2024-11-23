@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   render2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: davidga2 <davidga2@student.42madrid.com>   #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/20 23:13:04 by bmatos-d          #+#    #+#             */
-/*   Updated: 2024/11/20 23:24:15 by bmatos-d         ###   ########.fr       */
+/*   Created: 2024-11-23 04:32:29 by davidga2          #+#    #+#             */
+/*   Updated: 2024-11-23 04:32:29 by davidga2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../../includes/cub3d.h"
 
 static void	drawing(t_parsed_data *global)
 {

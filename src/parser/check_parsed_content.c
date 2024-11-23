@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_parsed_content.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: davidga2 <davidga2@student.42madrid.com>   #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/08 05:43:57 by davidga2          #+#    #+#             */
-/*   Updated: 2024/11/20 16:53:06 by bmatos-d         ###   ########.fr       */
+/*   Created: 2024-11-23 03:57:31 by davidga2          #+#    #+#             */
+/*   Updated: 2024-11-23 03:57:31 by davidga2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/Parsing.h"
+#include "../../includes/cub3d.h"
 
 void	check_parsed_content(t_data *data)
 {
