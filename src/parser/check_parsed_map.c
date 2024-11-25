@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_parsed_map.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davidga2 <davidga2@student.42madrid.com>   #+#  +:+       +#+        */
+/*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-11-23 04:26:36 by davidga2          #+#    #+#             */
-/*   Updated: 2024-11-23 04:26:36 by davidga2         ###   ########.fr       */
+/*   Created: 2024/11/23 04:26:36 by davidga2          #+#    #+#             */
+/*   Updated: 2024/11/25 18:26:38 by bmatos-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "../../includes/cub3d_parser.h"
 
 void	map_floor(t_data *data)
 {

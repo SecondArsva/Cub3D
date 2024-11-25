@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d_parser.h                                     :+:      :+:    :+:   */
+/*   Parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/23 04:03:17 by davidga2          #+#    #+#             */
-/*   Updated: 2024/11/25 17:11:27 by bmatos-d         ###   ########.fr       */
+/*   Created: 2024/10/30 22:08:17 by davidga2          #+#    #+#             */
+/*   Updated: 2024/11/20 22:20:38 by bmatos-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_PARSER_H
-# define CUB3D_PARSER_H
+#ifndef PARSING_H
+# define PARSING_H
 
 # include "../libs/libft/libft.h"
 # include <stdbool.h>
@@ -37,11 +37,11 @@ typedef enum e_type
 
 typedef enum e_angle
 {
-	UNKNOWN,
 	SOUTH,
 	EAST,
 	NORTH,
 	WEST,
+	UNKNOWN,
 }			t_angle;
 
 typedef struct s_data

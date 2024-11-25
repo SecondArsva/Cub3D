@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davidga2 <davidga2@student.42madrid.com>   #+#  +:+       +#+        */
+/*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-11-23 04:32:29 by davidga2          #+#    #+#             */
-/*   Updated: 2024-11-23 04:32:29 by davidga2         ###   ########.fr       */
+/*   Created: 2024/11/23 04:32:29 by davidga2          #+#    #+#             */
+/*   Updated: 2024/11/25 17:22:58 by bmatos-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,22 @@ static void	drawing(t_parsed_data *global)
 	while (++global->current_y_pixel <= global->draw_end)
 	{
 		if (global->wall_type == 0 && (global->current_ray_x_component) > 0)
-			my_pixel_put(WIN_WID - global->horizontal_pixel,
+			my_pixel_put(WIN_WID - global->horizontal_pixel - 1,
 				global->current_y_pixel,
 				&global->mlx_img,
 				colour(global, WEST));
 		else if (global->wall_type == 0 && global->current_ray_x_component <= 0)
-			my_pixel_put(WIN_WID - global->horizontal_pixel,
+			my_pixel_put(WIN_WID - global->horizontal_pixel - 1,
 				global->current_y_pixel,
 				&global->mlx_img,
 				colour(global, EAST));
 		else if (global->wall_type == 1 && global->current_ray_y_component > 0)
-			my_pixel_put(WIN_WID - global->horizontal_pixel,
+			my_pixel_put(WIN_WID - global->horizontal_pixel - 1,
 				global->current_y_pixel,
 				&global->mlx_img,
 				colour(global, SOUTH));
 		else if (global->wall_type == 1 && global->current_ray_y_component <= 0)
-			my_pixel_put(WIN_WID - global->horizontal_pixel,
+			my_pixel_put(WIN_WID - global->horizontal_pixel - 1,
 				global->current_y_pixel,
 				&global->mlx_img,
 				colour(global, NORTH));
@@ -63,6 +63,9 @@ static void	wall_height(t_parsed_data *global)
 		global->wall_impact = global->pos_x + global->wall_dist \
 		* global->current_ray_x_component;
 	global->wall_impact -= floor(global->wall_impact);
+	if ((global->wall_type == 1 && global->current_ray_y_component  < 0)
+	 	|| (global->wall_type == 0  && global->current_ray_x_component  > 0))
+		global->wall_impact = 1 - global->wall_impact;
 	drawing(global);
 }
 
