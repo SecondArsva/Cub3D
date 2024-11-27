@@ -6,7 +6,7 @@
 /*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 04:32:40 by davidga2          #+#    #+#             */
-/*   Updated: 2024/11/25 17:25:29 by bmatos-d         ###   ########.fr       */
+/*   Updated: 2024/11/27 17:44:28 by bmatos-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,21 @@ void	my_pixel_put(int x, int y, t_img *img, int colour)
 
 int	colour(t_parsed_data *global, int direction)
 {
-	return ((int)(global->texture_buffer[direction]
-		[(int)(global->wall_impact * 160) + 160 * (int)
-		(160 * ((global->current_y_pixel - (double)global->draw_start) \
-			/ ((double)global->wall_height)))]));
+	int img_height;
+	int img_width;
+	int	hor_pix;
+	int	ver_pix;
+
+	img_width = global->dim[direction][0];
+	img_height = global->dim[direction][1];
+	hor_pix = global->wall_impact * img_width;
+	if (global->wall_height < WIN_HEI)
+		ver_pix = img_width * (int)(img_height * ((global->current_y_pixel - global->draw_start) / ((double)global->wall_height)));
+	else
+	{
+		ver_pix = img_width * (int)(img_height * (((global->wall_height - WIN_HEI)/((double)global->wall_height * 2)) + ((global->current_y_pixel - global->draw_start) / ((double)global->wall_height))));
+	}
+	return ((int)(global->texture_buffer[direction][hor_pix + ver_pix]));
 }
 
 static void	draw_ceiling_floor(t_parsed_data *global)
@@ -34,10 +45,10 @@ static void	draw_ceiling_floor(t_parsed_data *global)
 	int	horizontal_pixel;
 	int	vertical_pixel;
 
-	horizontal_pixel = 0; // Start from 0, not -1
-	while (horizontal_pixel < WIN_WID) // Loop correctly for all pixels
+	horizontal_pixel = 0;
+	while (horizontal_pixel < WIN_WID)
 	{
-		vertical_pixel = 0; // Start from 0 for vertical pixels
+		vertical_pixel = 0;
 		while (vertical_pixel < WIN_HEI)
 		{
 			if (vertical_pixel < WIN_HEI / 2)
@@ -46,9 +57,9 @@ static void	draw_ceiling_floor(t_parsed_data *global)
 			else
 				my_pixel_put(horizontal_pixel, vertical_pixel,
 					&global->mlx_img, global->btm_colour);
-			vertical_pixel++; // Increment vertical_pixel correctly
+			vertical_pixel++;
 		}
-		horizontal_pixel++; // Increment horizontal_pixel
+		horizontal_pixel++;
 	}
 }
 

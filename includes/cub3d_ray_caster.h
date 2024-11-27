@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_ray_caster.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: davidga2 <davidga2@student.42madrid.com>   #+#  +:+       +#+        */
+/*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-11-23 04:11:07 by davidga2          #+#    #+#             */
-/*   Updated: 2024-11-23 04:11:07 by davidga2         ###   ########.fr       */
+/*   Created: 2024/11/23 04:11:07 by davidga2          #+#    #+#             */
+/*   Updated: 2024/11/27 17:35:21 by bmatos-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # include <fcntl.h>
 # include "../libs/minilibx/mlx.h"
 # define NUM_TXT 	4
-# define WIN_WID  	800
-# define WIN_HEI 	550
+# define WIN_WID  	1200
+# define WIN_HEI 	900
 # define TITLE	 	"cub3D"
 # define SCALE		1
 # define SPEED 		0.3
@@ -71,6 +71,7 @@ typedef struct s_parsed_data
 	int					btm_colour;
 	unsigned int		*texture_buffer[NUM_TXT];
 	void				*texture_images[NUM_TXT];
+	int					dim[NUM_TXT][2];
 	char				**map;
 													//Ray
 	double				horizontal_pixel;

@@ -6,7 +6,7 @@
 /*   By: bmatos-d <bmatos-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 04:32:52 by davidga2          #+#    #+#             */
-/*   Updated: 2024/11/25 18:26:29 by bmatos-d         ###   ########.fr       */
+/*   Updated: 2024/11/27 19:34:54 by bmatos-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,24 @@ int	file_exists(const char *path)
 void	load_texture(t_parsed_data *global, int direction, char *texture)
 {
 	int	img_height;
-	//ERROR CHECK HERE
+	int img_width;
 
 	global->texture_images[direction] = mlx_xpm_file_to_image(global->mlx_con,
-			texture, &img_height, &img_height);
+			texture, &img_width, &img_height);
 	if (!global->texture_images[direction])
 	{
     	fprintf(stderr, "Error: Failed to load texture '%s'.\n", texture);
-    	exit(EXIT_FAILURE);
+    	exit(EXIT_FAILURE); // change
 	}
+	global->dim[direction][0] = img_width;
+	global->dim[direction][1] = img_height;
 	global->texture_buffer[direction] = (unsigned int *)mlx_get_data_addr(\
 			global->texture_images[direction], &img_height,
-			&img_height, &img_height);
+			&img_width, &img_height);
 	if (!global->texture_buffer[direction])
 	{
 		fprintf(stderr, "Error: Failed to retrieve texture buffer for '%s'.\n", texture);
-		exit(EXIT_FAILURE); // or your error-handling mechanism
+		exit(EXIT_FAILURE); // change
 	}
 }
 
