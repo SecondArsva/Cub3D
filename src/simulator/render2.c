@@ -21,22 +21,22 @@ static void	drawing(t_parsed_data *global)
 			my_pixel_put(WIN_WID - global->horizontal_pixel - 1,
 				global->current_y_pixel,
 				&global->mlx_img,
-				colour(global, WEST));
+				colour(global, SOUTH));
 		else if (global->wall_type == 0 && global->current_ray_x_component <= 0)
 			my_pixel_put(WIN_WID - global->horizontal_pixel - 1,
 				global->current_y_pixel,
 				&global->mlx_img,
-				colour(global, EAST));
+				colour(global, NORTH));
 		else if (global->wall_type == 1 && global->current_ray_y_component > 0)
 			my_pixel_put(WIN_WID - global->horizontal_pixel - 1,
 				global->current_y_pixel,
 				&global->mlx_img,
-				colour(global, SOUTH));
+				colour(global, EAST));
 		else if (global->wall_type == 1 && global->current_ray_y_component <= 0)
 			my_pixel_put(WIN_WID - global->horizontal_pixel - 1,
 				global->current_y_pixel,
 				&global->mlx_img,
-				colour(global, NORTH));
+				colour(global, WEST));
 	}
 }
 

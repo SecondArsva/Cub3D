@@ -1,20 +1,21 @@
-NO ../textures/tmep/john_matangui.xpm
-SO ../textures/tmep/monica_flema.xpm
-EA ../textures/tmep/Hubble-Veil-Nebula-scaled-3566417318.xpm
-WE ../textures/tmep/SDO_s_Ultra-high_Definition_View_of_2012_Venus_Transit__171_Angstrom_Full_Disc_-3990704513.xpm
+SO ../textures/cardinal/so.xpm
+NO ../textures/cardinal/no.xpm
+EA ../textures/cardinal/ea.xpm
 
-F 20,20,20
-C 10,10,40
+C 15,55,40
+                          WE ../textures/cardinal/we.xpm
+
+F 200,200,200
 
 
-11111111111
-10000000001
-10000000001
-10000000001
-10000000001
-10000W00001
-10000000001
-10000000001
-10000000001
-10000000001
-11111111111
+                                                                                111111111 
+                                                                               10100000001
+                                                                               10000000001
+                                                                              110000110001
+                                                                               10000000001
+                                                             11111111111111111111000000101
+                                                            100000000000000000000000E00001
+                                                             1111111111111111110011100001
+                                                                               10000000101
+                                                                               10000000001
+                                                                               11111111111

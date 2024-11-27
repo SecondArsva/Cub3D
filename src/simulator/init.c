@@ -75,6 +75,10 @@ void	load_texture(t_parsed_data *global, int direction, char *texture,
 
 static void	load_textures(t_parsed_data *global, t_data *data)
 {
+	//load_texture(global, NORTH, data->n_img_path, data);
+	//load_texture(global, EAST, data->e_img_path, data);
+	//load_texture(global, SOUTH, data->s_img_path, data);
+	//load_texture(global, WEST, data->w_img_path, data);
 	load_texture(global, NORTH, data->n_img_path, data);
 	load_texture(global, EAST, data->e_img_path, data);
 	load_texture(global, SOUTH, data->s_img_path, data);

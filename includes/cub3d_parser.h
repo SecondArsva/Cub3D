@@ -38,10 +38,10 @@ typedef enum e_type
 typedef enum e_angle
 {
 	UNKNOWN,
-	SOUTH,
 	EAST,
 	NORTH,
 	WEST,
+	SOUTH,
 }			t_angle;
 
 typedef struct s_data
