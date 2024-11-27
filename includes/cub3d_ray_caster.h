@@ -25,6 +25,7 @@
 # include <fcntl.h>
 # include "../libs/minilibx/mlx.h"
 # define NUM_TXT 	4
+# define DANGER 	0.02
 # define WIN_WID  	1200
 # define WIN_HEI 	900
 # define TITLE	 	"cub3D"

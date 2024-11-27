@@ -23,8 +23,8 @@ void	my_pixel_put(int x, int y, t_img *img, int colour)
 
 int	colour(t_parsed_data *global, int direction)
 {
-	int img_height;
-	int img_width;
+	int	img_height;
+	int	img_width;
 	int	hor_pix;
 	int	ver_pix;
 
@@ -32,10 +32,14 @@ int	colour(t_parsed_data *global, int direction)
 	img_height = global->dim[direction][1];
 	hor_pix = global->wall_impact * img_width;
 	if (global->wall_height < WIN_HEI)
-		ver_pix = img_width * (int)(img_height * ((global->current_y_pixel - global->draw_start) / ((double)global->wall_height)));
+		ver_pix = img_width * (int)(img_height * ((global->current_y_pixel
+						- global->draw_start) / ((double)global->wall_height)));
 	else
 	{
-		ver_pix = img_width * (int)(img_height * (((global->wall_height - WIN_HEI)/((double)global->wall_height * 2)) + ((global->current_y_pixel - global->draw_start) / ((double)global->wall_height))));
+		ver_pix = img_width * (int)(img_height * (((global->wall_height
+							- WIN_HEI) / ((double)global->wall_height * 2))
+					+ ((global->current_y_pixel - global->draw_start)
+						/ ((double)global->wall_height))));
 	}
 	return ((int)(global->texture_buffer[direction][hor_pix + ver_pix]));
 }

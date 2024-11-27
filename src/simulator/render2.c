@@ -61,8 +61,8 @@ static void	wall_height(t_parsed_data *global)
 		global->wall_impact = global->pos_y + global->wall_dist \
 		* global->current_ray_y_component;
 	global->wall_impact -= floor(global->wall_impact);
-	if ((global->wall_type == 1 && global->current_ray_y_component  < 0)
-	 	|| (global->wall_type == 0  && global->current_ray_x_component  > 0))
+	if ((global->wall_type == 1 && global->current_ray_y_component < 0)
+		|| (global->wall_type == 0 && global->current_ray_x_component > 0))
 		global->wall_impact = 1 - global->wall_impact;
 	drawing(global);
 }

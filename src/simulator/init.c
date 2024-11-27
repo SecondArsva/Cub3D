@@ -48,17 +48,18 @@ int	file_exists(const char *path)
 	return (access(path, F_OK) != -1);
 }
 
-void	load_texture(t_parsed_data *global, int direction, char *texture)
+void	load_texture(t_parsed_data *global, int direction, char *texture,
+	t_data *data)
 {
 	int	img_height;
-	int img_width;
+	int	img_width;
 
 	global->texture_images[direction] = mlx_xpm_file_to_image(global->mlx_con,
 			texture, &img_width, &img_height);
 	if (!global->texture_images[direction])
 	{
-    	fprintf(stderr, "Error: Failed to load texture '%s'.\n", texture);
-    	exit(EXIT_FAILURE); // change
+		free_data(data);
+		close_handler(global);
 	}
 	global->dim[direction][0] = img_width;
 	global->dim[direction][1] = img_height;
@@ -67,17 +68,17 @@ void	load_texture(t_parsed_data *global, int direction, char *texture)
 			&img_width, &img_height);
 	if (!global->texture_buffer[direction])
 	{
-		fprintf(stderr, "Error: Failed to retrieve texture buffer for '%s'.\n", texture);
-		exit(EXIT_FAILURE); // change
+		free_data(data);
+		close_handler(global);
 	}
 }
 
 static void	load_textures(t_parsed_data *global, t_data *data)
 {
-	load_texture(global, NORTH, data->n_img_path);
-	load_texture(global, EAST, data->e_img_path);
-	load_texture(global, SOUTH, data->s_img_path);
-	load_texture(global, WEST, data->w_img_path);
+	load_texture(global, NORTH, data->n_img_path, data);
+	load_texture(global, EAST, data->e_img_path, data);
+	load_texture(global, SOUTH, data->s_img_path, data);
+	load_texture(global, WEST, data->w_img_path, data);
 }
 
 t_parsed_data	*parsing_temp(t_data *data)
@@ -88,7 +89,7 @@ t_parsed_data	*parsing_temp(t_data *data)
 	ret->top_colour = data->c_red << 16 | data->c_green << 8 | data->c_blue;
 	ret->btm_colour = data->f_red << 16 | data->f_green << 8 | data->f_blue;
 	ret->map = ft_matrixdup(data->map);
-	ret->angle = data->player_angle * M_PI / 2;
+	ret->angle = data->player_angle * M_PI / 2 + DANGER;
 	ret->pos_y = data->player_pos_x;
 	ret->pos_x = data->player_pos_y;
 	window_init(ret);
